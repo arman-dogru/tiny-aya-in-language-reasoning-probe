@@ -21,7 +21,7 @@ from probe.langs import LANGS  # noqa: E402
 from probe.stats import avg_rank, bootstrap_mean, sig3  # noqa: E402
 
 plt.rcParams.update({"font.size": 9, "axes.spines.top": False, "axes.spines.right": False,
-                     "svg.hashsalt": "aya", "figure.dpi": 110})
+                     "svg.hashsalt": "aya", "figure.dpi": 110, "savefig.dpi": 160})
 ARM_COL = {"direct": "#9e9e9e", "l2": "#d95f02", "en": "#1b9e77", "native": "#7570b3"}
 ARM_NAME = {"direct": "direct (no reasoning)", "l2": "L2-forced reasoning", "en": "En-forced reasoning",
             "native": "native thinking"}

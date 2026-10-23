@@ -59,7 +59,7 @@ flowchart LR
 
 ![Bar chart: share of gold dataset questions per language that GlotLID labels with the right language, whole question and per sentence; all languages are at or above about 94%.](docs/figures/lid_validation.png)
 
-*Data: [`results/lid_validation.json`](results/lid_validation.json) · script: [`probe/lid_check.py`](probe/lid_check.py) · figure: [`probe/figures.py`](probe/figures.py).* GlotLID was run on the slice's own gold questions before it was used on traces. These are human translations for MGSM and AfriMGSM, but Global PIQA *parallel* items were machine-translated from English and then corrected by a native speaker (per its dataset card), so they are post-edited MT, not originally authored text. Swahili sometimes comes back as Congo Swahili (`swc`), which counts as Swahili; Zulu is sometimes confused with other Nguni languages, so a lenient Zulu rate (also accepting `xho/nbl/ssw/nde`) is reported alongside. **GlotLID has a single `fra_Latn` label**, so the L2 rate cannot tell Canadian French from France French. The fr-CA result is about reasoning *on* Global PIQA's fr-CA items (English items machine-translated and then post-edited by a native speaker, so not Québécois-authored), not about producing Québécois-register traces. Cultural readings of the fr-CA numbers should be made with that in mind.
+**Figure 1.** *Data: [`results/lid_validation.json`](results/lid_validation.json) · script: [`probe/lid_check.py`](probe/lid_check.py) · figure: [`probe/figures.py`](probe/figures.py).* GlotLID was run on the slice's own gold questions before it was used on traces. These are human translations for MGSM and AfriMGSM, but Global PIQA *parallel* items were machine-translated from English and then corrected by a native speaker (per its dataset card), so they are post-edited MT, not originally authored text. Swahili sometimes comes back as Congo Swahili (`swc`), which counts as Swahili; Zulu is sometimes confused with other Nguni languages, so a lenient Zulu rate (also accepting `xho/nbl/ssw/nde`) is reported alongside. **GlotLID has a single `fra_Latn` label**, so the L2 rate cannot tell Canadian French from France French. The fr-CA result is about reasoning *on* Global PIQA's fr-CA items (English items machine-translated and then post-edited by a native speaker, so not Québécois-authored), not about producing Québécois-register traces. Cultural readings of the fr-CA numbers should be made with that in mind.
 
 ## Results
 
@@ -69,7 +69,7 @@ All numbers below are produced from the committed traces by [`probe/score.py`](p
 
 ![Grouped bar charts of accuracy per language for the direct, L2-forced and En-forced arms, with Wilson 95% intervals. Left: MGSM/AfriMGSM math. Right: Global PIQA 4-way, with a dotted chance line at 25%. Both reasoning arms far outperform direct answering on math. In Swahili, Yoruba and Zulu math the L2-forced bars are lower than the En-forced bars.](docs/figures/accuracy_by_language.png)
 
-*Data: [`results/summary.json`](results/summary.json) · script: [`probe/figures.py`](probe/figures.py) (`fig_accuracy`).*
+**Figure 2.** *Data: [`results/summary.json`](results/summary.json) · script: [`probe/figures.py`](probe/figures.py) (`fig_accuracy`).*
 
 - **Reasoning matters a lot for math, in any language.** Direct answering scores 0–5% on every math language. Either reasoning arm lifts English and French to 60–70% (paired L2 vs direct on English and French math: +60 and +65 pp, exact McNemar p = 0.00183 and 0.000977; see [`docs/results.md`](docs/results.md)). These are single-language cells (one trace per question, so no clustering issue), and both stay below 0.05 even after Bonferroni ×17 (0.0311 and 0.0166).
 - **For French, no difference was detected between the two reasoning languages.** French math is 70% vs 70%, with 2 items won by each arm. English (the control, where both arms mostly reason in English) is 65% vs 60%.
@@ -80,13 +80,13 @@ All numbers below are produced from the committed traces by [`probe/score.py`](p
 
 ![Two heatmaps of the share of traces whose GlotLID whole-trace label is the prompt language (left) or English (right), with rows for the L2-forced and En-forced arms and columns for task × language. L2-forced traces are almost all in the prompt language; En-forced traces are almost all in English, except Swahili math, where some stay in Swahili.](docs/figures/trace_language_heatmap.png)
 
-*Data: [`results/summary.json`](results/summary.json) (`l2`, `en_trace`) · per-trace labels: [`results/per_trace.csv`](results/per_trace.csv) · script: [`probe/figures.py`](probe/figures.py) (`fig_lid_heatmap`).*
+**Figure 3.** *Data: [`results/summary.json`](results/summary.json) (`l2`, `en_trace`) · per-trace labels: [`results/per_trace.csv`](results/per_trace.csv) · script: [`probe/figures.py`](probe/figures.py) (`fig_lid_heatmap`).*
 
 The manipulation worked: the L2-forced arm reasons in the prompt language for nearly every trace, including Yoruba and Zulu, and the En-forced arm mostly reasons in English. The arms therefore differ in the language of the reasoning, which is the variable under study. The leak goes one way: some *En-forced* Swahili math traces drift back into Swahili, but L2-forced traces almost never drift into English.
 
 ![Box plots per non-English task × language. Orange: the share of sentence segments in the prompt language for L2-forced traces. Green: the share of sentences in English for En-forced traces. Most boxes sit at or near 1.0, with a few outlier traces that code-switch.](docs/figures/trace_language_purity.png)
 
-*Data: [`results/per_trace.csv`](results/per_trace.csv) (`target_share`, `english_share`) and [`results/trace_lid_check.json`](results/trace_lid_check.json) · script: [`probe/trace_lid_check.py`](probe/trace_lid_check.py), [`probe/figures.py`](probe/figures.py) (`fig_trace_lid`).*
+**Figure 4.** *Data: [`results/per_trace.csv`](results/per_trace.csv) (`target_share`, `english_share`) and [`results/trace_lid_check.json`](results/trace_lid_check.json) · script: [`probe/trace_lid_check.py`](probe/trace_lid_check.py), [`probe/figures.py`](probe/figures.py) (`fig_trace_lid`).*
 
 **Language-ID check on the traces themselves.** A whole-trace label can hide code-switching, so every trace was also split into sentences and each sentence labelled. The whole-trace label is cross-checked against the majority sentence label, and GlotLID's confidence is recorded in [`results/trace_lid_check.json`](results/trace_lid_check.json). Swahili disagreements are mostly `swh` vs `swc` (both Swahili). The few en-arm outliers are traces dominated by numbers and option text quoted from the prompt.
 
@@ -94,15 +94,15 @@ The manipulation worked: the L2-forced arm reasons in the prompt language for ne
 
 ![Scatter of generated reasoning tokens (log x) against the repetition score (share of repeated word 4-grams) for every L2-forced and En-forced trace. Cap hits are marked with crosses. Repetition rises with length; the few traces that hit the 512-token cap are the most repetitive.](docs/figures/repetition_vs_length.png)
 
-*Data: [`results/per_trace.csv`](results/per_trace.csv) (`gen_tokens`, `rep4`, `cap_hit`) · script: [`probe/figures.py`](probe/figures.py) (`fig_rep_scatter`).*
+**Figure 5.** *Data: [`results/per_trace.csv`](results/per_trace.csv) (`gen_tokens`, `rep4`, `cap_hit`) · script: [`probe/figures.py`](probe/figures.py) (`fig_rep_scatter`).*
 
 ![Bar charts by resource group (English control, French, low-resource), both tasks pooled: accuracy for all three arms, L2 rate and mean generated tokens for the two reasoning arms, with 95% intervals.](docs/figures/resource_group_summary.png)
 
-*Data: [`results/summary.json`](results/summary.json) (`…|all|group:*`) · script: [`probe/figures.py`](probe/figures.py) (`fig_groups`).*
+**Figure 6.** *Data: [`results/summary.json`](results/summary.json) (`…|all|group:*`) · script: [`probe/figures.py`](probe/figures.py) (`fig_groups`).*
 
 ![Grouped bar charts of mean generated tokens per language and arm, with bootstrap 95% intervals, for math and PIQA.](docs/figures/tokens_by_language.png)
 
-*Data: [`results/summary.json`](results/summary.json) (`tokens`) · script: [`probe/figures.py`](probe/figures.py) (`fig_tokens`).*
+**Figure 7.** *Data: [`results/summary.json`](results/summary.json) (`tokens`) · script: [`probe/figures.py`](probe/figures.py) (`fig_tokens`).*
 
 Traces are short for both arms: median 148 generated tokens, 5th–95th percentile 69–294, across all 440 reasoning traces. Only 3 of the 440 hit the 512-token cap. Repetition and length are positively correlated (Spearman ρ = 0.49 for L2-forced and 0.53 for En-forced, n = 220 each, tied values given average ranks; shown on the plot), which matches the blog's observation in miniature. At this scale, though, doomlooping is a handful of traces, not a regime. Forcing in-language reasoning does **not** make this model think longer.
 
@@ -110,7 +110,7 @@ Traces are short for both arms: median 148 generated tokens, 5th–95th percenti
 
 ![Two-panel dot plot for MGSM/AfriMGSM. Mean explicit arithmetic steps (count of '=' signs) and mean numbered or bulleted lines per trace, by language and arm, with bootstrap 95% intervals. In Swahili, Yoruba and Zulu, L2-forced traces have almost no list structure, while En-forced traces have 6–8 list lines. Arithmetic-step counts do not separate the arms consistently: Swahili L2 traces have more '=' signs than En traces, Yoruba and Zulu fewer.](docs/figures/reasoning_structure.png)
 
-*Data: [`results/per_trace.csv`](results/per_trace.csv) (`eq_steps`, `list_lines`) and [`results/error_coding_summary.json`](results/error_coding_summary.json) (`structure_math`) · script: [`probe/metrics.py`](probe/metrics.py) (`structure`), [`probe/error_coding.py`](probe/error_coding.py), [`probe/figures.py`](probe/figures.py) (`fig_structure`).*
+**Figure 8.** *Data: [`results/per_trace.csv`](results/per_trace.csv) (`eq_steps`, `list_lines`) and [`results/error_coding_summary.json`](results/error_coding_summary.json) (`structure_math`) · script: [`probe/metrics.py`](probe/metrics.py) (`structure`), [`probe/error_coding.py`](probe/error_coding.py), [`probe/figures.py`](probe/figures.py) (`fig_structure`).*
 
 **Coding of all 17 discordant pairs.** Of the 60 low-resource math pairs, 13 were right only under En-forcing and 4 only under L2-forcing. I read every one of these 34 traces and coded the first error in the losing trace that alone makes its answer wrong. The raw coding, with a one-line justification per item, is committed as data: [`results/error_coding.csv`](results/error_coding.csv), summarized by [`probe/error_coding.py`](probe/error_coding.py) into [`results/error_coding_summary.json`](results/error_coding_summary.json). One coder (me) did the coding after seeing which arm was right, so it was not blinded and has no inter-rater check.
 
@@ -137,17 +137,17 @@ Swahili, the language with the largest accuracy drop (−20 pp), runs the *other
 
 ![Horizontal strips, one per rule-selected example trace, with each sentence coloured by its GlotLID language. L2-forced traces are a single colour in the prompt language; En-forced traces are English with small segments of quoted prompt text.](docs/figures/example_trace_strips.png)
 
-*Data: [`results/examples.json`](results/examples.json) · script: [`probe/examples.py`](probe/examples.py), [`probe/figures.py`](probe/figures.py) (`fig_strips`).*
+**Figure 9.** *Data: [`results/examples.json`](results/examples.json) · script: [`probe/examples.py`](probe/examples.py), [`probe/figures.py`](probe/figures.py) (`fig_strips`).*
 
 ### 5. Paired differences
 
 ![Forest plot of accuracy(L2-forced) minus accuracy(En-forced) per task × language and pooled by resource group, with 95% paired bootstrap intervals clustered by source item, and beside each row the n, discordant counts, cluster sign-flip p and Holm-adjusted p. No row is significant after correction.](docs/figures/paired_l2_vs_en.png)
 
-*Data: [`results/paired.json`](results/paired.json) · script: [`probe/stats.py`](probe/stats.py), [`probe/figures.py`](probe/figures.py) (`fig_forest`).*
+**Figure 10.** *Data: [`results/paired.json`](results/paired.json) · script: [`probe/stats.py`](probe/stats.py), [`probe/figures.py`](probe/figures.py) (`fig_forest`).*
 
 ![Forest plot of accuracy(L2-forced) minus accuracy(direct) per task × language: large positive gains on math in every language, smaller and noisier on PIQA.](docs/figures/paired_l2_vs_direct.png)
 
-*Data: [`results/paired.json`](results/paired.json) · script: [`probe/figures.py`](probe/figures.py) (`fig_forest`).*
+**Figure 11.** *Data: [`results/paired.json`](results/paired.json) · script: [`probe/figures.py`](probe/figures.py) (`fig_forest`).*
 
 ### Tables
 
