@@ -61,70 +61,72 @@
   }
  },
  "tiny-aya-global-q4km|en|piqa|en": {
-  "n": 14,
-  "mean_conf": 0.9986947732312339,
+  "n": 20,
+  "mean_conf": 0.9982896178960801,
   "low_conf_share": 0.0,
   "whole_vs_segment_majority_agree": 1.0,
   "l2_whole": 1.0,
   "l2_segment_majority": 1.0,
   "labels": {
-   "eng_Latn": 14
+   "eng_Latn": 20
   }
  },
  "tiny-aya-global-q4km|en|piqa|fr": {
-  "n": 13,
-  "mean_conf": 0.9869981683217562,
+  "n": 20,
+  "mean_conf": 0.9846195936203003,
   "low_conf_share": 0.0,
   "whole_vs_segment_majority_agree": 1.0,
   "l2_whole": 0.0,
   "l2_segment_majority": 0.0,
   "labels": {
-   "eng_Latn": 13
+   "eng_Latn": 20
   }
  },
  "tiny-aya-global-q4km|en|piqa|fr-CA": {
-  "n": 13,
-  "mean_conf": 0.9920651820989755,
+  "n": 20,
+  "mean_conf": 0.9935813099145889,
   "low_conf_share": 0.0,
   "whole_vs_segment_majority_agree": 1.0,
   "l2_whole": 0.0,
   "l2_segment_majority": 0.0,
   "labels": {
-   "eng_Latn": 13
+   "eng_Latn": 20
   }
  },
  "tiny-aya-global-q4km|en|piqa|sw": {
-  "n": 13,
-  "mean_conf": 0.9933911241017855,
+  "n": 20,
+  "mean_conf": 0.9888399422168732,
   "low_conf_share": 0.0,
   "whole_vs_segment_majority_agree": 1.0,
-  "l2_whole": 0.07692307692307693,
-  "l2_segment_majority": 0.07692307692307693,
+  "l2_whole": 0.1,
+  "l2_segment_majority": 0.1,
   "labels": {
-   "eng_Latn": 12,
-   "swh_Latn": 1
+   "eng_Latn": 18,
+   "swh_Latn": 2
   }
  },
  "tiny-aya-global-q4km|en|piqa|yo": {
-  "n": 13,
-  "mean_conf": 0.988040933242211,
+  "n": 20,
+  "mean_conf": 0.9691121101379394,
   "low_conf_share": 0.0,
-  "whole_vs_segment_majority_agree": 1.0,
-  "l2_whole": 0.0,
-  "l2_segment_majority": 0.0,
+  "whole_vs_segment_majority_agree": 0.95,
+  "l2_whole": 0.15,
+  "l2_segment_majority": 0.1,
   "labels": {
-   "eng_Latn": 13
+   "eng_Latn": 17,
+   "yor_Latn": 3
   }
  },
  "tiny-aya-global-q4km|en|piqa|zu": {
-  "n": 13,
-  "mean_conf": 0.9918432740064768,
+  "n": 20,
+  "mean_conf": 0.9681053131818771,
   "low_conf_share": 0.0,
-  "whole_vs_segment_majority_agree": 1.0,
-  "l2_whole": 0.0,
-  "l2_segment_majority": 0.0,
+  "whole_vs_segment_majority_agree": 0.95,
+  "l2_whole": 0.15,
+  "l2_segment_majority": 0.2,
   "labels": {
-   "eng_Latn": 13
+   "eng_Latn": 17,
+   "zul_Latn": 3
   }
  },
  "tiny-aya-global-q4km|l2|math|en": {
@@ -185,71 +187,71 @@
   }
  },
  "tiny-aya-global-q4km|l2|piqa|en": {
-  "n": 14,
-  "mean_conf": 0.9976609221526554,
+  "n": 20,
+  "mean_conf": 0.9975125402212143,
   "low_conf_share": 0.0,
   "whole_vs_segment_majority_agree": 1.0,
   "l2_whole": 1.0,
   "l2_segment_majority": 1.0,
   "labels": {
-   "eng_Latn": 14
+   "eng_Latn": 20
   }
  },
  "tiny-aya-global-q4km|l2|piqa|fr": {
-  "n": 13,
-  "mean_conf": 0.9990388567631061,
+  "n": 20,
+  "mean_conf": 0.9990486472845077,
   "low_conf_share": 0.0,
   "whole_vs_segment_majority_agree": 1.0,
   "l2_whole": 1.0,
   "l2_segment_majority": 1.0,
   "labels": {
-   "fra_Latn": 13
+   "fra_Latn": 20
   }
  },
  "tiny-aya-global-q4km|l2|piqa|fr-CA": {
-  "n": 13,
-  "mean_conf": 0.9983762961167556,
+  "n": 20,
+  "mean_conf": 0.9983474165201187,
   "low_conf_share": 0.0,
   "whole_vs_segment_majority_agree": 1.0,
   "l2_whole": 1.0,
   "l2_segment_majority": 1.0,
   "labels": {
-   "fra_Latn": 13
+   "fra_Latn": 20
   }
  },
  "tiny-aya-global-q4km|l2|piqa|sw": {
-  "n": 13,
-  "mean_conf": 0.919933965572944,
+  "n": 20,
+  "mean_conf": 0.9287844449281693,
   "low_conf_share": 0.0,
-  "whole_vs_segment_majority_agree": 0.9230769230769231,
-  "l2_whole": 0.9230769230769231,
+  "whole_vs_segment_majority_agree": 0.95,
+  "l2_whole": 0.95,
   "l2_segment_majority": 1.0,
   "labels": {
-   "swh_Latn": 11,
+   "swh_Latn": 18,
    "swc_Latn": 1,
    "mgr_Latn": 1
   }
  },
  "tiny-aya-global-q4km|l2|piqa|yo": {
-  "n": 13,
-  "mean_conf": 0.9999963595316961,
+  "n": 20,
+  "mean_conf": 0.9999976336956025,
   "low_conf_share": 0.0,
   "whole_vs_segment_majority_agree": 1.0,
   "l2_whole": 1.0,
   "l2_segment_majority": 1.0,
   "labels": {
-   "yor_Latn": 13
+   "yor_Latn": 20
   }
  },
  "tiny-aya-global-q4km|l2|piqa|zu": {
-  "n": 13,
-  "mean_conf": 0.9908898243537316,
+  "n": 20,
+  "mean_conf": 0.9875805050134658,
   "low_conf_share": 0.0,
   "whole_vs_segment_majority_agree": 1.0,
-  "l2_whole": 0.9230769230769231,
-  "l2_segment_majority": 0.9230769230769231,
+  "l2_whole": 0.95,
+  "l2_segment_majority": 0.95,
   "labels": {
-   "zul_Latn": 12,
+   "zul_Latn": 19,
    "xho_Latn": 1
   }
  }

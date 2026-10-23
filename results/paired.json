@@ -1,20 +1,20 @@
 {
  "tiny-aya-global-q4km|l2-en|all|group:control": {
-  "n": 36,
-  "acc_a": 0.5555555555555556,
-  "acc_b": 0.5277777777777778,
-  "diff": 0.027777777777777776,
+  "n": 40,
+  "acc_a": 0.525,
+  "acc_b": 0.5,
+  "diff": 0.025,
   "diff_ci": [
-   -0.16666666666666666,
-   0.2222222222222222
+   -0.15,
+   0.2
   ],
   "a_only": 7,
   "b_only": 6,
   "mcnemar_p": 1.0,
-  "tokens_diff": -0.5277777777777778,
+  "tokens_diff": 1.275,
   "tokens_diff_ci": [
-   -15.25,
-   13.194444444444445
+   -12.525,
+   13.9
   ],
   "a_only_ids": [
    "mgsm-012-en",
@@ -35,21 +35,21 @@
   ]
  },
  "tiny-aya-global-q4km|l2-en|all|group:high": {
-  "n": 52,
-  "acc_a": 0.46153846153846156,
-  "acc_b": 0.4230769230769231,
-  "diff": 0.038461538461538464,
+  "n": 60,
+  "acc_a": 0.45,
+  "acc_b": 0.45,
+  "diff": 0.0,
   "diff_ci": [
-   -0.1724137931034483,
-   0.24489795918367346
+   -0.18333333333333332,
+   0.1875
   ],
   "a_only": 12,
-  "b_only": 10,
-  "mcnemar_p": 0.8318119049072266,
-  "tokens_diff": 8.211538461538462,
+  "b_only": 12,
+  "mcnemar_p": 1.0,
+  "tokens_diff": 5.8,
   "tokens_diff_ci": [
-   -20.88235294117647,
-   35.94230769230769
+   -18.83582089552239,
+   30.17241379310345
   ],
   "a_only_ids": [
    "mgsm-174-fr",
@@ -75,25 +75,27 @@
    "piqa-000051-fr-CA",
    "piqa-000085-fr-CA",
    "piqa-000085-fr",
-   "piqa-000087-fr-CA"
+   "piqa-000087-fr-CA",
+   "piqa-000095-fr",
+   "piqa-000100-fr"
   ]
  },
  "tiny-aya-global-q4km|l2-en|all|group:low": {
-  "n": 105,
-  "acc_a": 0.37142857142857144,
-  "acc_b": 0.45714285714285713,
-  "diff": -0.08571428571428572,
+  "n": 120,
+  "acc_a": 0.3416666666666667,
+  "acc_b": 0.43333333333333335,
+  "diff": -0.09166666666666666,
   "diff_ci": [
    -0.2,
-   0.02857142857142857
+   0.016666666666666666
   ],
-  "a_only": 14,
-  "b_only": 23,
-  "mcnemar_p": 0.18774155899882317,
-  "tokens_diff": -10.238095238095237,
+  "a_only": 16,
+  "b_only": 27,
+  "mcnemar_p": 0.12628947438543037,
+  "tokens_diff": -12.4,
   "tokens_diff_ci": [
-   -25.752380952380953,
-   6.257142857142857
+   -28.791666666666668,
+   4.525
   ],
   "a_only_ids": [
    "mgsm-049-yo",
@@ -109,7 +111,9 @@
    "piqa-000028-yo",
    "piqa-000063-sw",
    "piqa-000071-sw",
-   "piqa-000071-zu"
+   "piqa-000071-zu",
+   "piqa-000087-zu",
+   "piqa-000102-zu"
   ],
   "b_only_ids": [
    "mgsm-000-zu",
@@ -134,7 +138,11 @@
    "piqa-000048-sw",
    "piqa-000048-zu",
    "piqa-000051-sw",
-   "piqa-000085-sw"
+   "piqa-000085-sw",
+   "piqa-000087-sw",
+   "piqa-000100-sw",
+   "piqa-000100-yo",
+   "piqa-000102-sw"
   ]
  },
  "tiny-aya-global-q4km|l2-en|math|en": {
@@ -366,21 +374,21 @@
   ]
  },
  "tiny-aya-global-q4km|l2-en|piqa|en": {
-  "n": 16,
-  "acc_a": 0.4375,
-  "acc_b": 0.4375,
+  "n": 20,
+  "acc_a": 0.4,
+  "acc_b": 0.4,
   "diff": 0.0,
   "diff_ci": [
-   -0.375,
-   0.3125
+   -0.3,
+   0.3
   ],
   "a_only": 4,
   "b_only": 4,
   "mcnemar_p": 1.0,
-  "tokens_diff": 0.5625,
+  "tokens_diff": 3.95,
   "tokens_diff_ci": [
-   -18.125,
-   18.75
+   -11.4,
+   19.0
   ],
   "a_only_ids": [
    "piqa-000023-en",
@@ -396,21 +404,21 @@
   ]
  },
  "tiny-aya-global-q4km|l2-en|piqa|fr": {
-  "n": 16,
-  "acc_a": 0.3125,
-  "acc_b": 0.125,
-  "diff": 0.1875,
+  "n": 20,
+  "acc_a": 0.3,
+  "acc_b": 0.25,
+  "diff": 0.05,
   "diff_ci": [
-   -0.125,
-   0.5
+   -0.25,
+   0.35
   ],
   "a_only": 5,
-  "b_only": 2,
-  "mcnemar_p": 0.453125,
-  "tokens_diff": 6.6875,
+  "b_only": 4,
+  "mcnemar_p": 1.0,
+  "tokens_diff": 0.65,
   "tokens_diff_ci": [
-   -40.3125,
-   52.5
+   -37.2,
+   38.2
   ],
   "a_only_ids": [
    "piqa-000016-fr",
@@ -421,25 +429,27 @@
   ],
   "b_only_ids": [
    "piqa-000048-fr",
-   "piqa-000085-fr"
+   "piqa-000085-fr",
+   "piqa-000095-fr",
+   "piqa-000100-fr"
   ]
  },
  "tiny-aya-global-q4km|l2-en|piqa|fr-CA": {
-  "n": 16,
-  "acc_a": 0.3125,
-  "acc_b": 0.375,
-  "diff": -0.0625,
+  "n": 20,
+  "acc_a": 0.35,
+  "acc_b": 0.4,
+  "diff": -0.05,
   "diff_ci": [
-   -0.4375,
-   0.375
+   -0.35,
+   0.25
   ],
   "a_only": 5,
   "b_only": 6,
   "mcnemar_p": 1.0,
-  "tokens_diff": 2.5,
+  "tokens_diff": 2.75,
   "tokens_diff_ci": [
-   -47.1875,
-   46.0625
+   -37.05,
+   38.75
   ],
   "a_only_ids": [
    "piqa-000023-fr-CA",
@@ -458,21 +468,21 @@
   ]
  },
  "tiny-aya-global-q4km|l2-en|piqa|group:control": {
-  "n": 16,
-  "acc_a": 0.4375,
-  "acc_b": 0.4375,
+  "n": 20,
+  "acc_a": 0.4,
+  "acc_b": 0.4,
   "diff": 0.0,
   "diff_ci": [
-   -0.375,
-   0.3125
+   -0.3,
+   0.3
   ],
   "a_only": 4,
   "b_only": 4,
   "mcnemar_p": 1.0,
-  "tokens_diff": 0.5625,
+  "tokens_diff": 3.95,
   "tokens_diff_ci": [
-   -18.125,
-   18.75
+   -11.4,
+   19.0
   ],
   "a_only_ids": [
    "piqa-000023-en",
@@ -488,21 +498,21 @@
   ]
  },
  "tiny-aya-global-q4km|l2-en|piqa|group:high": {
-  "n": 32,
-  "acc_a": 0.3125,
-  "acc_b": 0.25,
-  "diff": 0.0625,
+  "n": 40,
+  "acc_a": 0.325,
+  "acc_b": 0.325,
+  "diff": 0.0,
   "diff_ci": [
    -0.25,
-   0.375
+   0.25
   ],
   "a_only": 10,
-  "b_only": 8,
-  "mcnemar_p": 0.8145294189453125,
-  "tokens_diff": 4.59375,
+  "b_only": 10,
+  "mcnemar_p": 1.0,
+  "tokens_diff": 1.7,
   "tokens_diff_ci": [
-   -39.625,
-   45.09375
+   -33.85,
+   34.525
   ],
   "a_only_ids": [
    "piqa-000016-fr",
@@ -524,25 +534,27 @@
    "piqa-000051-fr-CA",
    "piqa-000085-fr-CA",
    "piqa-000085-fr",
-   "piqa-000087-fr-CA"
+   "piqa-000087-fr-CA",
+   "piqa-000095-fr",
+   "piqa-000100-fr"
   ]
  },
  "tiny-aya-global-q4km|l2-en|piqa|group:low": {
-  "n": 45,
-  "acc_a": 0.4444444444444444,
-  "acc_b": 0.4444444444444444,
-  "diff": 0.0,
+  "n": 60,
+  "acc_a": 0.36666666666666664,
+  "acc_b": 0.4,
+  "diff": -0.03333333333333333,
   "diff_ci": [
-   -0.17777777777777778,
-   0.17777777777777778
+   -0.18333333333333332,
+   0.11666666666666667
   ],
-  "a_only": 10,
-  "b_only": 10,
-  "mcnemar_p": 1.0,
-  "tokens_diff": -16.866666666666667,
+  "a_only": 12,
+  "b_only": 14,
+  "mcnemar_p": 0.8450189828872681,
+  "tokens_diff": -19.533333333333335,
   "tokens_diff_ci": [
-   -44.62222222222222,
-   12.844444444444445
+   -47.43333333333333,
+   8.766666666666667
   ],
   "a_only_ids": [
    "piqa-000000-sw",
@@ -554,7 +566,9 @@
    "piqa-000028-yo",
    "piqa-000063-sw",
    "piqa-000071-sw",
-   "piqa-000071-zu"
+   "piqa-000071-zu",
+   "piqa-000087-zu",
+   "piqa-000102-zu"
   ],
   "b_only_ids": [
    "piqa-000016-yo",
@@ -566,25 +580,29 @@
    "piqa-000048-sw",
    "piqa-000048-zu",
    "piqa-000051-sw",
-   "piqa-000085-sw"
+   "piqa-000085-sw",
+   "piqa-000087-sw",
+   "piqa-000100-sw",
+   "piqa-000100-yo",
+   "piqa-000102-sw"
   ]
  },
  "tiny-aya-global-q4km|l2-en|piqa|sw": {
-  "n": 15,
-  "acc_a": 0.4,
-  "acc_b": 0.4,
-  "diff": 0.0,
+  "n": 20,
+  "acc_a": 0.3,
+  "acc_b": 0.45,
+  "diff": -0.15,
   "diff_ci": [
-   -0.4,
-   0.4
+   -0.5,
+   0.2
   ],
   "a_only": 5,
-  "b_only": 5,
-  "mcnemar_p": 1.0,
-  "tokens_diff": 2.3333333333333335,
+  "b_only": 8,
+  "mcnemar_p": 0.5810546875,
+  "tokens_diff": -0.6,
   "tokens_diff_ci": [
-   -57.666666666666664,
-   71.46666666666667
+   -52.85,
+   57.25
   ],
   "a_only_ids": [
    "piqa-000000-sw",
@@ -598,25 +616,28 @@
    "piqa-000028-sw",
    "piqa-000048-sw",
    "piqa-000051-sw",
-   "piqa-000085-sw"
+   "piqa-000085-sw",
+   "piqa-000087-sw",
+   "piqa-000100-sw",
+   "piqa-000102-sw"
   ]
  },
  "tiny-aya-global-q4km|l2-en|piqa|yo": {
-  "n": 15,
-  "acc_a": 0.3333333333333333,
-  "acc_b": 0.4666666666666667,
-  "diff": -0.13333333333333333,
+  "n": 20,
+  "acc_a": 0.25,
+  "acc_b": 0.4,
+  "diff": -0.15,
   "diff_ci": [
-   -0.4,
-   0.13333333333333333
+   -0.35,
+   0.05
   ],
   "a_only": 1,
-  "b_only": 3,
-  "mcnemar_p": 0.625,
-  "tokens_diff": -49.06666666666667,
+  "b_only": 4,
+  "mcnemar_p": 0.375,
+  "tokens_diff": -41.3,
   "tokens_diff_ci": [
-   -112.06666666666666,
-   0.8666666666666667
+   -93.4,
+   2.95
   ],
   "a_only_ids": [
    "piqa-000028-yo"
@@ -624,31 +645,34 @@
   "b_only_ids": [
    "piqa-000016-yo",
    "piqa-000017-yo",
-   "piqa-000022-yo"
+   "piqa-000022-yo",
+   "piqa-000100-yo"
   ]
  },
  "tiny-aya-global-q4km|l2-en|piqa|zu": {
-  "n": 15,
-  "acc_a": 0.6,
-  "acc_b": 0.4666666666666667,
-  "diff": 0.13333333333333333,
+  "n": 20,
+  "acc_a": 0.55,
+  "acc_b": 0.35,
+  "diff": 0.2,
   "diff_ci": [
-   -0.2,
-   0.4666666666666667
+   -0.05,
+   0.45
   ],
-  "a_only": 4,
+  "a_only": 6,
   "b_only": 2,
-  "mcnemar_p": 0.6875,
-  "tokens_diff": -3.8666666666666667,
+  "mcnemar_p": 0.2890625,
+  "tokens_diff": -16.7,
   "tokens_diff_ci": [
-   -42.666666666666664,
-   35.733333333333334
+   -56.2,
+   20.3
   ],
   "a_only_ids": [
    "piqa-000000-zu",
    "piqa-000016-zu",
    "piqa-000022-zu",
-   "piqa-000071-zu"
+   "piqa-000071-zu",
+   "piqa-000087-zu",
+   "piqa-000102-zu"
   ],
   "b_only_ids": [
    "piqa-000028-zu",
@@ -656,21 +680,21 @@
   ]
  },
  "tiny-aya-global-q4km|l2-direct|all|group:control": {
-  "n": 36,
-  "acc_a": 0.5555555555555556,
-  "acc_b": 0.1388888888888889,
-  "diff": 0.4166666666666667,
+  "n": 40,
+  "acc_a": 0.525,
+  "acc_b": 0.175,
+  "diff": 0.35,
   "diff_ci": [
-   0.19444444444444445,
-   0.6111111111111112
+   0.15,
+   0.55
   ],
   "a_only": 18,
-  "b_only": 3,
-  "mcnemar_p": 0.0014896392822265625,
-  "tokens_diff": 160.77777777777777,
+  "b_only": 4,
+  "mcnemar_p": 0.004343509674072266,
+  "tokens_diff": 155.925,
   "tokens_diff_ci": [
-   144.41666666666666,
-   177.02777777777777
+   140.2,
+   171.4
   ],
   "a_only_ids": [
    "mgsm-000-en",
@@ -695,25 +719,26 @@
   "b_only_ids": [
    "mgsm-241-en",
    "piqa-000017-en",
-   "piqa-000051-en"
+   "piqa-000051-en",
+   "piqa-000090-en"
   ]
  },
  "tiny-aya-global-q4km|l2-direct|all|group:high": {
-  "n": 52,
-  "acc_a": 0.46153846153846156,
-  "acc_b": 0.2692307692307692,
-  "diff": 0.19230769230769232,
+  "n": 60,
+  "acc_a": 0.45,
+  "acc_b": 0.26666666666666666,
+  "diff": 0.18333333333333332,
   "diff_ci": [
-   0.0,
-   0.4074074074074074
+   0.015873015873015872,
+   0.36666666666666664
   ],
-  "a_only": 19,
+  "a_only": 20,
   "b_only": 9,
-  "mcnemar_p": 0.08715855330228806,
-  "tokens_diff": 159.6346153846154,
+  "mcnemar_p": 0.06142834573984146,
+  "tokens_diff": 152.0,
   "tokens_diff_ci": [
-   136.22,
-   184.30188679245282
+   130.31578947368422,
+   174.93103448275863
   ],
   "a_only_ids": [
    "mgsm-000-fr",
@@ -734,7 +759,8 @@
    "piqa-000028-fr-CA",
    "piqa-000031-fr",
    "piqa-000080-fr-CA",
-   "piqa-000080-fr"
+   "piqa-000080-fr",
+   "piqa-000095-fr-CA"
   ],
   "b_only_ids": [
    "mgsm-044-fr",
@@ -749,21 +775,21 @@
   ]
  },
  "tiny-aya-global-q4km|l2-direct|all|group:low": {
-  "n": 106,
-  "acc_a": 0.36792452830188677,
-  "acc_b": 0.16037735849056603,
-  "diff": 0.20754716981132076,
+  "n": 120,
+  "acc_a": 0.3416666666666667,
+  "acc_b": 0.18333333333333332,
+  "diff": 0.15833333333333333,
   "diff_ci": [
-   0.0673076923076923,
-   0.3490566037735849
+   0.025,
+   0.2916666666666667
   ],
-  "a_only": 30,
-  "b_only": 8,
-  "mcnemar_p": 0.0004719867429230362,
-  "tokens_diff": 152.96226415094338,
+  "a_only": 32,
+  "b_only": 13,
+  "mcnemar_p": 0.00660882284228137,
+  "tokens_diff": 153.425,
   "tokens_diff_ci": [
-   136.28703703703704,
-   171.8846153846154
+   137.54166666666666,
+   171.13333333333333
   ],
   "a_only_ids": [
    "mgsm-000-sw",
@@ -795,7 +821,9 @@
    "piqa-000063-sw",
    "piqa-000071-sw",
    "piqa-000071-yo",
-   "piqa-000071-zu"
+   "piqa-000071-zu",
+   "piqa-000087-zu",
+   "piqa-000102-zu"
   ],
   "b_only_ids": [
    "mgsm-044-zu",
@@ -805,7 +833,12 @@
    "piqa-000028-sw",
    "piqa-000028-zu",
    "piqa-000031-sw",
-   "piqa-000087-sw"
+   "piqa-000087-sw",
+   "piqa-000087-yo",
+   "piqa-000090-zu",
+   "piqa-000095-zu",
+   "piqa-000100-sw",
+   "piqa-000100-yo"
   ]
  },
  "tiny-aya-global-q4km|l2-direct|math|en": {
@@ -1081,21 +1114,21 @@
   ]
  },
  "tiny-aya-global-q4km|l2-direct|piqa|en": {
-  "n": 16,
-  "acc_a": 0.4375,
-  "acc_b": 0.25,
-  "diff": 0.1875,
+  "n": 20,
+  "acc_a": 0.4,
+  "acc_b": 0.3,
+  "diff": 0.1,
   "diff_ci": [
-   -0.125,
-   0.5
+   -0.15,
+   0.35
   ],
   "a_only": 5,
-  "b_only": 2,
-  "mcnemar_p": 0.453125,
-  "tokens_diff": 166.5,
+  "b_only": 3,
+  "mcnemar_p": 0.7265625,
+  "tokens_diff": 155.65,
   "tokens_diff_ci": [
-   140.0625,
-   191.375
+   132.35,
+   178.7
   ],
   "a_only_ids": [
    "piqa-000000-en",
@@ -1106,25 +1139,26 @@
   ],
   "b_only_ids": [
    "piqa-000017-en",
-   "piqa-000051-en"
+   "piqa-000051-en",
+   "piqa-000090-en"
   ]
  },
  "tiny-aya-global-q4km|l2-direct|piqa|fr": {
-  "n": 16,
-  "acc_a": 0.3125,
-  "acc_b": 0.4375,
-  "diff": -0.125,
+  "n": 20,
+  "acc_a": 0.3,
+  "acc_b": 0.4,
+  "diff": -0.1,
   "diff_ci": [
-   -0.4375,
-   0.25
+   -0.35,
+   0.2
   ],
   "a_only": 3,
   "b_only": 5,
   "mcnemar_p": 0.7265625,
-  "tokens_diff": 171.125,
+  "tokens_diff": 155.35,
   "tokens_diff_ci": [
-   134.375,
-   209.375
+   123.15,
+   189.75
   ],
   "a_only_ids": [
    "piqa-000016-fr",
@@ -1140,25 +1174,26 @@
   ]
  },
  "tiny-aya-global-q4km|l2-direct|piqa|fr-CA": {
-  "n": 16,
-  "acc_a": 0.3125,
-  "acc_b": 0.375,
-  "diff": -0.0625,
+  "n": 20,
+  "acc_a": 0.35,
+  "acc_b": 0.35,
+  "diff": 0.0,
   "diff_ci": [
-   -0.3125,
-   0.1875
+   -0.25,
+   0.25
   ],
-  "a_only": 2,
+  "a_only": 3,
   "b_only": 3,
   "mcnemar_p": 1.0,
-  "tokens_diff": 146.625,
+  "tokens_diff": 139.8,
   "tokens_diff_ci": [
-   115.625,
-   179.625
+   113.4,
+   168.25
   ],
   "a_only_ids": [
    "piqa-000028-fr-CA",
-   "piqa-000080-fr-CA"
+   "piqa-000080-fr-CA",
+   "piqa-000095-fr-CA"
   ],
   "b_only_ids": [
    "piqa-000016-fr-CA",
@@ -1167,21 +1202,21 @@
   ]
  },
  "tiny-aya-global-q4km|l2-direct|piqa|group:control": {
-  "n": 16,
-  "acc_a": 0.4375,
-  "acc_b": 0.25,
-  "diff": 0.1875,
+  "n": 20,
+  "acc_a": 0.4,
+  "acc_b": 0.3,
+  "diff": 0.1,
   "diff_ci": [
-   -0.125,
-   0.5
+   -0.15,
+   0.35
   ],
   "a_only": 5,
-  "b_only": 2,
-  "mcnemar_p": 0.453125,
-  "tokens_diff": 166.5,
+  "b_only": 3,
+  "mcnemar_p": 0.7265625,
+  "tokens_diff": 155.65,
   "tokens_diff_ci": [
-   140.0625,
-   191.375
+   132.35,
+   178.7
   ],
   "a_only_ids": [
    "piqa-000000-en",
@@ -1192,32 +1227,34 @@
   ],
   "b_only_ids": [
    "piqa-000017-en",
-   "piqa-000051-en"
+   "piqa-000051-en",
+   "piqa-000090-en"
   ]
  },
  "tiny-aya-global-q4km|l2-direct|piqa|group:high": {
-  "n": 32,
-  "acc_a": 0.3125,
-  "acc_b": 0.40625,
-  "diff": -0.09375,
+  "n": 40,
+  "acc_a": 0.325,
+  "acc_b": 0.375,
+  "diff": -0.05,
   "diff_ci": [
-   -0.3125,
+   -0.225,
    0.125
   ],
-  "a_only": 5,
+  "a_only": 6,
   "b_only": 8,
-  "mcnemar_p": 0.5810546875,
-  "tokens_diff": 158.875,
+  "mcnemar_p": 0.79052734375,
+  "tokens_diff": 147.575,
   "tokens_diff_ci": [
-   126.0,
-   192.5
+   119.55,
+   177.125
   ],
   "a_only_ids": [
    "piqa-000016-fr",
    "piqa-000028-fr-CA",
    "piqa-000031-fr",
    "piqa-000080-fr-CA",
-   "piqa-000080-fr"
+   "piqa-000080-fr",
+   "piqa-000095-fr-CA"
   ],
   "b_only_ids": [
    "piqa-000016-fr-CA",
@@ -1231,21 +1268,21 @@
   ]
  },
  "tiny-aya-global-q4km|l2-direct|piqa|group:low": {
-  "n": 46,
-  "acc_a": 0.43478260869565216,
-  "acc_b": 0.34782608695652173,
-  "diff": 0.08695652173913043,
+  "n": 60,
+  "acc_a": 0.36666666666666664,
+  "acc_b": 0.35,
+  "diff": 0.016666666666666666,
   "diff_ci": [
-   -0.13636363636363635,
-   0.3125
+   -0.16666666666666666,
+   0.21666666666666667
   ],
-  "a_only": 11,
-  "b_only": 7,
-  "mcnemar_p": 0.480682373046875,
-  "tokens_diff": 170.65217391304347,
+  "a_only": 13,
+  "b_only": 12,
+  "mcnemar_p": 1.0,
+  "tokens_diff": 167.45,
   "tokens_diff_ci": [
-   142.63636363636363,
-   201.0
+   142.65,
+   194.13333333333333
   ],
   "a_only_ids": [
    "piqa-000000-sw",
@@ -1258,7 +1295,9 @@
    "piqa-000063-sw",
    "piqa-000071-sw",
    "piqa-000071-yo",
-   "piqa-000071-zu"
+   "piqa-000071-zu",
+   "piqa-000087-zu",
+   "piqa-000102-zu"
   ],
   "b_only_ids": [
    "piqa-000022-yo",
@@ -1267,25 +1306,30 @@
    "piqa-000028-sw",
    "piqa-000028-zu",
    "piqa-000031-sw",
-   "piqa-000087-sw"
+   "piqa-000087-sw",
+   "piqa-000087-yo",
+   "piqa-000090-zu",
+   "piqa-000095-zu",
+   "piqa-000100-sw",
+   "piqa-000100-yo"
   ]
  },
  "tiny-aya-global-q4km|l2-direct|piqa|sw": {
-  "n": 16,
-  "acc_a": 0.375,
-  "acc_b": 0.3125,
-  "diff": 0.0625,
+  "n": 20,
+  "acc_a": 0.3,
+  "acc_b": 0.3,
+  "diff": 0.0,
   "diff_ci": [
-   -0.3125,
-   0.4375
+   -0.3,
+   0.3
   ],
   "a_only": 5,
-  "b_only": 4,
+  "b_only": 5,
   "mcnemar_p": 1.0,
-  "tokens_diff": 205.0,
+  "tokens_diff": 195.1,
   "tokens_diff_ci": [
-   149.5625,
-   265.875
+   146.85,
+   248.05
   ],
   "a_only_ids": [
    "piqa-000000-sw",
@@ -1298,78 +1342,85 @@
    "piqa-000023-sw",
    "piqa-000028-sw",
    "piqa-000031-sw",
-   "piqa-000087-sw"
+   "piqa-000087-sw",
+   "piqa-000100-sw"
   ]
  },
  "tiny-aya-global-q4km|l2-direct|piqa|yo": {
-  "n": 15,
-  "acc_a": 0.3333333333333333,
+  "n": 20,
+  "acc_a": 0.25,
   "acc_b": 0.4,
-  "diff": -0.06666666666666667,
+  "diff": -0.15,
   "diff_ci": [
-   -0.26666666666666666,
-   0.13333333333333333
+   -0.35,
+   0.05
   ],
   "a_only": 1,
-  "b_only": 2,
-  "mcnemar_p": 1.0,
-  "tokens_diff": 138.46666666666667,
+  "b_only": 4,
+  "mcnemar_p": 0.375,
+  "tokens_diff": 143.15,
   "tokens_diff_ci": [
-   109.4,
-   169.46666666666667
+   117.8,
+   170.8
   ],
   "a_only_ids": [
    "piqa-000071-yo"
   ],
   "b_only_ids": [
    "piqa-000022-yo",
-   "piqa-000023-yo"
+   "piqa-000023-yo",
+   "piqa-000087-yo",
+   "piqa-000100-yo"
   ]
  },
  "tiny-aya-global-q4km|l2-direct|piqa|zu": {
-  "n": 15,
-  "acc_a": 0.6,
-  "acc_b": 0.3333333333333333,
-  "diff": 0.26666666666666666,
+  "n": 20,
+  "acc_a": 0.55,
+  "acc_b": 0.35,
+  "diff": 0.2,
   "diff_ci": [
-   0.0,
-   0.5333333333333333
+   -0.1,
+   0.5
   ],
-  "a_only": 5,
-  "b_only": 1,
-  "mcnemar_p": 0.21875,
-  "tokens_diff": 166.2,
+  "a_only": 7,
+  "b_only": 3,
+  "mcnemar_p": 0.34375,
+  "tokens_diff": 164.1,
   "tokens_diff_ci": [
-   131.93333333333334,
-   205.86666666666667
+   131.1,
+   200.7
   ],
   "a_only_ids": [
    "piqa-000000-zu",
    "piqa-000016-zu",
    "piqa-000022-zu",
    "piqa-000043-zu",
-   "piqa-000071-zu"
+   "piqa-000071-zu",
+   "piqa-000087-zu",
+   "piqa-000102-zu"
   ],
   "b_only_ids": [
-   "piqa-000028-zu"
+   "piqa-000028-zu",
+   "piqa-000090-zu",
+   "piqa-000095-zu"
   ]
  },
  "tiny-aya-global-q4km|en-direct|all|group:control": {
-  "n": 36,
-  "acc_a": 0.5277777777777778,
-  "acc_b": 0.1388888888888889,
-  "diff": 0.3888888888888889,
+  "n": 40,
+  "acc_a": 0.5,
+  "acc_b": 0.175,
+  "diff": 0.325,
   "diff_ci": [
-   0.16666666666666666,
-   0.5833333333333334
+   0.125,
+   0.525
   ],
   "a_only": 17,
-  "b_only": 3,
-  "mcnemar_p": 0.0025768280029296875,
-  "tokens_diff": 161.30555555555554,
+  "b_only": 4,
+  "mcnemar_p": 0.007197380065917969,
+  "tokens_diff": 154.65,
   "tokens_diff_ci": [
-   141.36111111111111,
-   183.33333333333334
+   135.75,
+   175.1
   ],
   "a_only_ids": [
    "mgsm-000-en",
@@ -1393,25 +1444,26 @@
   "b_only_ids": [
    "mgsm-241-en",
    "piqa-000017-en",
-   "piqa-000063-en"
+   "piqa-000063-en",
+   "piqa-000090-en"
   ]
  },
  "tiny-aya-global-q4km|en-direct|all|group:high": {
-  "n": 52,
-  "acc_a": 0.4230769230769231,
-  "acc_b": 0.2692307692307692,
-  "diff": 0.15384615384615385,
+  "n": 60,
+  "acc_a": 0.45,
+  "acc_b": 0.26666666666666666,
+  "diff": 0.18333333333333332,
   "diff_ci": [
-   -0.037037037037037035,
-   0.36538461538461536
+   0.0,
+   0.38181818181818183
   ],
-  "a_only": 19,
+  "a_only": 22,
   "b_only": 11,
-  "mcnemar_p": 0.20048842206597328,
-  "tokens_diff": 151.42307692307693,
+  "mcnemar_p": 0.08014331245794892,
+  "tokens_diff": 146.2,
   "tokens_diff_ci": [
-   136.6734693877551,
-   168.0
+   132.29508196721312,
+   161.65079365079364
   ],
   "a_only_ids": [
    "mgsm-000-fr",
@@ -1432,7 +1484,10 @@
    "piqa-000048-fr-CA",
    "piqa-000085-fr-CA",
    "piqa-000085-fr",
-   "piqa-000087-fr-CA"
+   "piqa-000087-fr-CA",
+   "piqa-000095-fr-CA",
+   "piqa-000095-fr",
+   "piqa-000100-fr"
   ],
   "b_only_ids": [
    "piqa-000016-fr-CA",
@@ -1449,21 +1504,21 @@
   ]
  },
  "tiny-aya-global-q4km|en-direct|all|group:low": {
-  "n": 105,
-  "acc_a": 0.45714285714285713,
-  "acc_b": 0.1523809523809524,
-  "diff": 0.3047619047619048,
+  "n": 120,
+  "acc_a": 0.43333333333333335,
+  "acc_b": 0.18333333333333332,
+  "diff": 0.25,
   "diff_ci": [
-   0.18095238095238095,
-   0.4380952380952381
+   0.125,
+   0.375
   ],
-  "a_only": 37,
-  "b_only": 5,
-  "mcnemar_p": 4.4337048166198656e-07,
-  "tokens_diff": 162.74285714285713,
+  "a_only": 38,
+  "b_only": 8,
+  "mcnemar_p": 9.24769992138863e-06,
+  "tokens_diff": 165.825,
   "tokens_diff_ci": [
-   146.77142857142857,
-   179.02857142857144
+   149.675,
+   182.84166666666667
   ],
   "a_only_ids": [
    "mgsm-000-sw",
@@ -1502,14 +1557,18 @@
    "piqa-000048-zu",
    "piqa-000051-sw",
    "piqa-000071-yo",
-   "piqa-000085-sw"
+   "piqa-000085-sw",
+   "piqa-000102-sw"
   ],
   "b_only_ids": [
    "mgsm-044-zu",
    "piqa-000017-sw",
    "piqa-000023-yo",
    "piqa-000028-yo",
-   "piqa-000031-sw"
+   "piqa-000031-sw",
+   "piqa-000087-yo",
+   "piqa-000090-zu",
+   "piqa-000095-zu"
   ]
  },
  "tiny-aya-global-q4km|en-direct|math|en": {
@@ -1795,21 +1854,21 @@
   ]
  },
  "tiny-aya-global-q4km|en-direct|piqa|en": {
-  "n": 16,
-  "acc_a": 0.4375,
-  "acc_b": 0.25,
-  "diff": 0.1875,
+  "n": 20,
+  "acc_a": 0.4,
+  "acc_b": 0.3,
+  "diff": 0.1,
   "diff_ci": [
-   -0.125,
-   0.5
+   -0.15,
+   0.35
   ],
   "a_only": 5,
-  "b_only": 2,
-  "mcnemar_p": 0.453125,
-  "tokens_diff": 165.9375,
+  "b_only": 3,
+  "mcnemar_p": 0.7265625,
+  "tokens_diff": 151.7,
   "tokens_diff_ci": [
-   140.3125,
-   192.625
+   127.5,
+   176.85
   ],
   "a_only_ids": [
    "piqa-000000-en",
@@ -1820,28 +1879,31 @@
   ],
   "b_only_ids": [
    "piqa-000017-en",
-   "piqa-000063-en"
+   "piqa-000063-en",
+   "piqa-000090-en"
   ]
  },
  "tiny-aya-global-q4km|en-direct|piqa|fr": {
-  "n": 16,
-  "acc_a": 0.125,
-  "acc_b": 0.4375,
-  "diff": -0.3125,
+  "n": 20,
+  "acc_a": 0.25,
+  "acc_b": 0.4,
+  "diff": -0.15,
   "diff_ci": [
-   -0.5625,
-   0.0
+   -0.45,
+   0.15
   ],
-  "a_only": 1,
+  "a_only": 3,
   "b_only": 6,
-  "mcnemar_p": 0.125,
-  "tokens_diff": 164.4375,
+  "mcnemar_p": 0.5078125,
+  "tokens_diff": 154.7,
   "tokens_diff_ci": [
-   144.3125,
-   185.9375
+   136.75,
+   174.1
   ],
   "a_only_ids": [
-   "piqa-000085-fr"
+   "piqa-000085-fr",
+   "piqa-000095-fr",
+   "piqa-000100-fr"
   ],
   "b_only_ids": [
    "piqa-000017-fr",
@@ -1853,28 +1915,29 @@
   ]
  },
  "tiny-aya-global-q4km|en-direct|piqa|fr-CA": {
-  "n": 16,
-  "acc_a": 0.375,
-  "acc_b": 0.375,
-  "diff": 0.0,
+  "n": 20,
+  "acc_a": 0.4,
+  "acc_b": 0.35,
+  "diff": 0.05,
   "diff_ci": [
-   -0.375,
-   0.375
+   -0.25,
+   0.35
   ],
-  "a_only": 5,
+  "a_only": 6,
   "b_only": 5,
   "mcnemar_p": 1.0,
-  "tokens_diff": 144.125,
+  "tokens_diff": 137.05,
   "tokens_diff_ci": [
-   116.5,
-   177.6875
+   112.0,
+   165.85
   ],
   "a_only_ids": [
    "piqa-000017-fr-CA",
    "piqa-000043-fr-CA",
    "piqa-000048-fr-CA",
    "piqa-000085-fr-CA",
-   "piqa-000087-fr-CA"
+   "piqa-000087-fr-CA",
+   "piqa-000095-fr-CA"
   ],
   "b_only_ids": [
    "piqa-000016-fr-CA",
@@ -1885,21 +1948,21 @@
   ]
  },
  "tiny-aya-global-q4km|en-direct|piqa|group:control": {
-  "n": 16,
-  "acc_a": 0.4375,
-  "acc_b": 0.25,
-  "diff": 0.1875,
+  "n": 20,
+  "acc_a": 0.4,
+  "acc_b": 0.3,
+  "diff": 0.1,
   "diff_ci": [
-   -0.125,
-   0.5
+   -0.15,
+   0.35
   ],
   "a_only": 5,
-  "b_only": 2,
-  "mcnemar_p": 0.453125,
-  "tokens_diff": 165.9375,
+  "b_only": 3,
+  "mcnemar_p": 0.7265625,
+  "tokens_diff": 151.7,
   "tokens_diff_ci": [
-   140.3125,
-   192.625
+   127.5,
+   176.85
   ],
   "a_only_ids": [
    "piqa-000000-en",
@@ -1910,25 +1973,26 @@
   ],
   "b_only_ids": [
    "piqa-000017-en",
-   "piqa-000063-en"
+   "piqa-000063-en",
+   "piqa-000090-en"
   ]
  },
  "tiny-aya-global-q4km|en-direct|piqa|group:high": {
-  "n": 32,
-  "acc_a": 0.25,
-  "acc_b": 0.40625,
-  "diff": -0.15625,
+  "n": 40,
+  "acc_a": 0.325,
+  "acc_b": 0.375,
+  "diff": -0.05,
   "diff_ci": [
-   -0.375,
-   0.0625
+   -0.25,
+   0.175
   ],
-  "a_only": 6,
+  "a_only": 9,
   "b_only": 11,
-  "mcnemar_p": 0.332305908203125,
-  "tokens_diff": 154.28125,
+  "mcnemar_p": 0.8238029479980469,
+  "tokens_diff": 145.875,
   "tokens_diff_ci": [
-   133.5,
-   179.78125
+   126.9,
+   167.85
   ],
   "a_only_ids": [
    "piqa-000017-fr-CA",
@@ -1936,7 +2000,10 @@
    "piqa-000048-fr-CA",
    "piqa-000085-fr-CA",
    "piqa-000085-fr",
-   "piqa-000087-fr-CA"
+   "piqa-000087-fr-CA",
+   "piqa-000095-fr-CA",
+   "piqa-000095-fr",
+   "piqa-000100-fr"
   ],
   "b_only_ids": [
    "piqa-000016-fr-CA",
@@ -1953,21 +2020,21 @@
   ]
  },
  "tiny-aya-global-q4km|en-direct|piqa|group:low": {
-  "n": 45,
-  "acc_a": 0.4444444444444444,
-  "acc_b": 0.3333333333333333,
-  "diff": 0.1111111111111111,
+  "n": 60,
+  "acc_a": 0.4,
+  "acc_b": 0.35,
+  "diff": 0.05,
   "diff_ci": [
-   -0.044444444444444446,
-   0.26666666666666666
+   -0.08333333333333333,
+   0.2
   ],
-  "a_only": 9,
-  "b_only": 4,
-  "mcnemar_p": 0.266845703125,
-  "tokens_diff": 186.84444444444443,
+  "a_only": 10,
+  "b_only": 7,
+  "mcnemar_p": 0.629058837890625,
+  "tokens_diff": 186.98333333333332,
   "tokens_diff_ci": [
-   162.46666666666667,
-   210.24444444444444
+   161.75,
+   211.08333333333334
   ],
   "a_only_ids": [
    "piqa-000016-yo",
@@ -1978,37 +2045,42 @@
    "piqa-000048-zu",
    "piqa-000051-sw",
    "piqa-000071-yo",
-   "piqa-000085-sw"
+   "piqa-000085-sw",
+   "piqa-000102-sw"
   ],
   "b_only_ids": [
    "piqa-000017-sw",
    "piqa-000023-yo",
    "piqa-000028-yo",
-   "piqa-000031-sw"
+   "piqa-000031-sw",
+   "piqa-000087-yo",
+   "piqa-000090-zu",
+   "piqa-000095-zu"
   ]
  },
  "tiny-aya-global-q4km|en-direct|piqa|sw": {
-  "n": 15,
-  "acc_a": 0.4,
-  "acc_b": 0.26666666666666666,
-  "diff": 0.13333333333333333,
+  "n": 20,
+  "acc_a": 0.45,
+  "acc_b": 0.3,
+  "diff": 0.15,
   "diff_ci": [
-   -0.2,
-   0.4666666666666667
+   -0.1,
+   0.4
   ],
-  "a_only": 4,
+  "a_only": 5,
   "b_only": 2,
-  "mcnemar_p": 0.6875,
-  "tokens_diff": 202.93333333333334,
+  "mcnemar_p": 0.453125,
+  "tokens_diff": 195.7,
   "tokens_diff_ci": [
-   169.53333333333333,
-   238.33333333333334
+   162.95,
+   228.5
   ],
   "a_only_ids": [
    "piqa-000043-sw",
    "piqa-000048-sw",
    "piqa-000051-sw",
-   "piqa-000085-sw"
+   "piqa-000085-sw",
+   "piqa-000102-sw"
   ],
   "b_only_ids": [
    "piqa-000017-sw",
@@ -2016,21 +2088,21 @@
   ]
  },
  "tiny-aya-global-q4km|en-direct|piqa|yo": {
-  "n": 15,
-  "acc_a": 0.4666666666666667,
+  "n": 20,
+  "acc_a": 0.4,
   "acc_b": 0.4,
-  "diff": 0.06666666666666667,
+  "diff": 0.0,
   "diff_ci": [
-   -0.2,
-   0.3333333333333333
+   -0.25,
+   0.25
   ],
   "a_only": 3,
-  "b_only": 2,
+  "b_only": 3,
   "mcnemar_p": 1.0,
-  "tokens_diff": 187.53333333333333,
+  "tokens_diff": 184.45,
   "tokens_diff_ci": [
-   140.06666666666666,
-   247.6
+   145.2,
+   231.2
   ],
   "a_only_ids": [
    "piqa-000016-yo",
@@ -2039,30 +2111,34 @@
   ],
   "b_only_ids": [
    "piqa-000023-yo",
-   "piqa-000028-yo"
+   "piqa-000028-yo",
+   "piqa-000087-yo"
   ]
  },
  "tiny-aya-global-q4km|en-direct|piqa|zu": {
-  "n": 15,
-  "acc_a": 0.4666666666666667,
-  "acc_b": 0.3333333333333333,
-  "diff": 0.13333333333333333,
+  "n": 20,
+  "acc_a": 0.35,
+  "acc_b": 0.35,
+  "diff": 0.0,
   "diff_ci": [
-   0.0,
-   0.3333333333333333
+   -0.2,
+   0.2
   ],
   "a_only": 2,
-  "b_only": 0,
-  "mcnemar_p": 0.5,
-  "tokens_diff": 170.06666666666666,
+  "b_only": 2,
+  "mcnemar_p": 1.0,
+  "tokens_diff": 180.8,
   "tokens_diff_ci": [
-   146.6,
-   193.2
+   154.1,
+   209.65
   ],
   "a_only_ids": [
    "piqa-000043-zu",
    "piqa-000048-zu"
   ],
-  "b_only_ids": []
+  "b_only_ids": [
+   "piqa-000090-zu",
+   "piqa-000095-zu"
+  ]
  }
 }
