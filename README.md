@@ -106,19 +106,34 @@ The manipulation worked: the L2-forced arm reasons in the prompt language for ne
 
 Traces are short for both arms: median 148 generated tokens, 5th–95th percentile 69–294, across all 440 reasoning traces. Only 3 of the 440 hit the 512-token cap. Repetition and length are positively correlated (Spearman ρ = 0.49 for L2-forced and 0.53 for En-forced, n = 220 each, tied values given average ranks; shown on the plot), which matches the blog's observation in miniature. At this scale, though, doomlooping is a handful of traces, not a regime. Forcing in-language reasoning does **not** make this model think longer.
 
-### 4. Error analysis: why does L2 reasoning lose on low-resource math?
+### 4. Error analysis of the low-resource math discordant pairs (exploratory)
 
-![Two-panel dot plot for MGSM/AfriMGSM. Mean explicit arithmetic steps (count of '=' signs) and mean numbered or bulleted lines per trace, by language and arm, split into correct (dots) and wrong (crosses) traces. In Swahili, Yoruba and Zulu, L2-forced traces have almost no list structure, while En-forced traces have 6–8 list lines.](docs/figures/reasoning_structure.png)
+![Two-panel dot plot for MGSM/AfriMGSM. Mean explicit arithmetic steps (count of '=' signs) and mean numbered or bulleted lines per trace, by language and arm, with bootstrap 95% intervals. In Swahili, Yoruba and Zulu, L2-forced traces have almost no list structure, while En-forced traces have 6–8 list lines. Arithmetic-step counts do not separate the arms consistently: Swahili L2 traces have more '=' signs than En traces, Yoruba and Zulu fewer.](docs/figures/reasoning_structure.png)
 
-*Data: [`results/per_trace.csv`](results/per_trace.csv) (`eq_steps`, `list_lines`) and the table in [`docs/results.md`](docs/results.md#trace-structure-error-analysis-math) · script: [`probe/metrics.py`](probe/metrics.py) (`structure`), [`probe/figures.py`](probe/figures.py) (`fig_structure`).*
+*Data: [`results/per_trace.csv`](results/per_trace.csv) (`eq_steps`, `list_lines`) and [`results/error_coding_summary.json`](results/error_coding_summary.json) (`structure_math`) · script: [`probe/metrics.py`](probe/metrics.py) (`structure`), [`probe/error_coding.py`](probe/error_coding.py), [`probe/figures.py`](probe/figures.py) (`fig_structure`).*
 
-The two arms write in different *styles*, not only different languages. En-forced traces on low-resource prompts are enumerated, step-by-step derivations (6–8 list lines per trace). L2-forced Swahili, Yoruba and Zulu traces are a single prose paragraph (≈0 list lines), and Yoruba and Zulu L2 traces also contain fewer explicit arithmetic steps on average (2.6 vs 4.3 and 3.5 vs 5.2 `=` signs per trace). Reading the discordant items, the dominant L2 failure is **dropping a condition of the problem**, not arithmetic error:
+**Coding of all 17 discordant pairs.** Of the 60 low-resource math pairs, 13 were right only under En-forcing and 4 only under L2-forcing. I read every one of these 34 traces and coded the first error in the losing trace that alone makes its answer wrong. The raw coding, with a one-line justification per item, is committed as data: [`results/error_coding.csv`](results/error_coding.csv), summarized by [`probe/error_coding.py`](probe/error_coding.py) into [`results/error_coding_summary.json`](results/error_coding_summary.json). One coder (me) did the coding after seeing which arm was right, so it was not blinded and has no inter-rater check.
 
-- **`mgsm-058-sw` (gold 57):** the L2 trace adds the $3 fee and $4 tip but never applies the 25% charge (→ 47). The En trace lists it as its own step (→ 57).
-- **`mgsm-012-yo` (gold 13):** the L2 trace ignores the $90 planting cost and divides revenue by upkeep (→ 4). The En trace includes it (→ 12.2, rounded up to 13).
-- **`mgsm-015-sw` (gold 125):** both arms compute $125 and $96 correctly, but the L2 trace then subtracts the principal and picks the wrong option (→ −7904).
+| losing trace's first error | L2 lost (13 en-only pairs) | En lost (4 l2-only pairs) |
+|---|---:|---:|
+| dropped a stated condition or quantity | 4 (058-sw, 090-sw, 012-yo, 210-yo) | 2 (049-yo, 241-sw) |
+| wrong operation or sign on the right quantities | 4 (050-yo, 058-zu, 060-zu, 090-zu) | 1 (148-zu) |
+| solved a different problem (wrong setup) | 4 (000-zu, 015-sw, 015-yo, 060-sw) | 1 (210-zu) |
+| doomloop until the 512-token cap | 1 (174-sw) | 0 |
+| **winning trace itself reached gold through a visibly wrong step** | 3 (000-zu, 012-yo, 210-yo) | 1 (241-sw) |
 
-This is consistent with forcing in a low-resource language pushing the model away from the structured English-style derivations it was presumably trained on most. The structure gap is measured; the causal story is a hypothesis. Within an arm, list structure does not cleanly separate right from wrong answers. Annotated traces, chosen by fixed rules rather than hand-picked: [`docs/examples.md`](docs/examples.md).
+No single cause dominates. L2 losses split evenly across dropped conditions, wrong operations and wrong setups, and En losses are the same kinds of error. Four of the 17 "wins" are themselves flawed. For example, in `mgsm-012-yo` (gold 13) the L2 trace ignores the $90 planting cost and divides revenue by upkeep (→ 4). The En trace does use the cost, but it computes 90 / 7.5 as "12.2" (it is exactly 12) and then rounds up, so its 13 comes from wrong arithmetic plus rounding. In `mgsm-210-yo` the En trace reaches 10 as $50 / $5, which drops both the savings and the mowing rate. Per-item notes are in the CSV; no item was selected for this section, because all 17 are listed.
+
+**Structure.** The two arms also write in different *styles*. En-forced traces on low-resource prompts are enumerated derivations (6.1–7.8 list lines per trace), while L2-forced Swahili, Yoruba and Zulu traces are one prose paragraph (0–0.3 list lines). Explicit arithmetic steps (`=` signs per trace, mean [bootstrap 95% CI], n = 20 each) do **not** move consistently with the arm:
+
+| math, `=` per trace | en | fr | sw | yo | zu |
+|---|---|---|---|---|---|
+| L2-forced | 5.2 [4.3, 6.1] | 4.3 [3.4, 5.1] | **5.3 [2.9, 9.9]** | 2.6 [2.0, 3.3] | 3.6 [2.8, 4.5] |
+| En-forced | 6.2 [5.0, 7.6] | 4.5 [3.7, 5.3] | 4.5 [3.7, 5.5] | 4.3 [3.3, 5.7] | 5.2 [4.1, 6.5] |
+
+Swahili, the language with the largest accuracy drop (−20 pp), runs the *other* way: L2 traces have more `=` steps than En traces. That mean is driven by the one doomloop trace (174-sw, 45 `=` signs); without it the Swahili L2 mean is 3.3 vs 4.5, and the medians are 3 vs 4. Fewer explicit steps therefore cannot be the general explanation, and I do not offer one.
+
+**Confounds.** List structure is almost perfectly collinear with arm × language here: prose appears only in L2-forced low-resource traces, which are also the only traces in Swahili, Yoruba or Zulu. The En arm's prefill (`Step-by-Step Answer:`) invites a numbered list, while the L2 openers are prose sentences. The data therefore cannot separate "reasoning in L2", "reasoning in prose" and "a different opener". Telling them apart would need an L2-forced arm with an in-language "use a numbered list" instruction, which was not run. Annotated traces chosen by the fixed rules in [`probe/examples.py`](probe/examples.py) are in [`docs/examples.md`](docs/examples.md).
 
 ![Horizontal strips, one per rule-selected example trace, with each sentence coloured by its GlotLID language. L2-forced traces are a single colour in the prompt language; En-forced traces are English with small segments of quoted prompt text.](docs/figures/example_trace_strips.png)
 
@@ -211,7 +226,8 @@ Holm / BH adjust the cluster sign-flip p over the family of **17 distinct** l2-v
 ## Limitations
 
 - **Not the Thinkers.** Every number is for Tiny Aya Global Q4_K_M under prompt and prefill forcing, which is the *inference-time forcing baseline* the blog argues is inferior to training. The study says nothing direct about L2-Thinker's or En-Thinker's accuracy. It shows what the untrained-for-L2 base family does when pushed, which is the gap the Thinkers are meant to close. [`scripts/run_thinkers.sh`](scripts/run_thinkers.sh) is the drop-in path; it is untested.
-- **Small n.** There are 20 items per cell (40 per language across tasks). Only the pooled low-resource math effect has an interval that excludes 0, and it only just does so. Treat the per-language bars as descriptive.
+- **Small n, exploratory.** There are 20 items per cell (40 per language across tasks), and no comparison was pre-registered. Only the pooled low-resource math difference has a percentile-bootstrap interval that excludes 0, and only just. Its primary cluster test is p = 0.0938 (Holm-adjusted 1.00 over 17 tests), so nothing here is significant. Treat the per-language bars as descriptive. More low-resource math items would be the cheapest way to sharpen this; none were added in this round because the shared box is busy.
+- **Reasoning language is confounded with style and opener.** In the low-resource cells, L2-forcing changes three things at once: the language of the trace, its form (prose instead of a numbered list), and the prefilled opener (an in-language sentence instead of `Step-by-Step Answer:`). These are collinear in this design, so any accuracy gap cannot be attributed to language alone (see §4).
 - **Q4_K_M and greedy decoding.** Quantization can hurt low-resource languages more than English, and the model card recommends temperature 0.6. Both choices are fixed across arms, so the *comparison* is fair, but absolute accuracies are likely below what bf16 with sampling would give.
 - **Canadian French.** fr-CA appears only in Global PIQA; MGSM has no fr-CA split. LID cannot separate fr-CA from fr-FR, and the fr-CA prompts used the France-French MGSM opener ("Réponse étape par étape :").
 - **Zulu opener** was written by the author and is not native-checked. **Answer parsing:** lenient parsing (last number or option letter) is the primary metric; strict `####`-only accuracy and format-compliance rates are in [`results/summary.json`](results/summary.json) (`acc_strict`, `format_rate`).

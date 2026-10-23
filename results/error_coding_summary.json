@@ -1,0 +1,184 @@
+{
+ "en_only": {
+  "loser_cause": {
+   "condition_dropped": 4,
+   "doomloop_cap": 1,
+   "wrong_operation": 4,
+   "wrong_setup": 4
+  },
+  "n": 13,
+  "winner_reasoning_flawed": 3
+ },
+ "l2_only": {
+  "loser_cause": {
+   "condition_dropped": 2,
+   "wrong_operation": 1,
+   "wrong_setup": 1
+  },
+  "n": 4,
+  "winner_reasoning_flawed": 1
+ },
+ "n_coded": 17,
+ "structure_math": {
+  "en|en|eq_steps": {
+   "ci": [
+    4.95,
+    7.55
+   ],
+   "mean": 6.15,
+   "n": 20
+  },
+  "en|en|list_lines": {
+   "ci": [
+    5.4,
+    9.8
+   ],
+   "mean": 7.4,
+   "n": 20
+  },
+  "en|l2|eq_steps": {
+   "ci": [
+    4.3,
+    6.05
+   ],
+   "mean": 5.15,
+   "n": 20
+  },
+  "en|l2|list_lines": {
+   "ci": [
+    5.9,
+    8.8
+   ],
+   "mean": 7.35,
+   "n": 20
+  },
+  "fr|en|eq_steps": {
+   "ci": [
+    3.65,
+    5.3
+   ],
+   "mean": 4.45,
+   "n": 20
+  },
+  "fr|en|list_lines": {
+   "ci": [
+    5.3,
+    8.35
+   ],
+   "mean": 6.9,
+   "n": 20
+  },
+  "fr|l2|eq_steps": {
+   "ci": [
+    3.4,
+    5.1
+   ],
+   "mean": 4.25,
+   "n": 20
+  },
+  "fr|l2|list_lines": {
+   "ci": [
+    2.7,
+    7.15
+   ],
+   "mean": 4.8,
+   "n": 20
+  },
+  "sw|en|eq_steps": {
+   "ci": [
+    3.65,
+    5.45
+   ],
+   "mean": 4.55,
+   "n": 20
+  },
+  "sw|en|list_lines": {
+   "ci": [
+    5.9,
+    8.85
+   ],
+   "mean": 7.35,
+   "n": 20
+  },
+  "sw|l2|eq_steps": {
+   "ci": [
+    2.9,
+    9.85
+   ],
+   "mean": 5.35,
+   "n": 20
+  },
+  "sw|l2|list_lines": {
+   "ci": [
+    0.0,
+    0.3
+   ],
+   "mean": 0.15,
+   "n": 20
+  },
+  "yo|en|eq_steps": {
+   "ci": [
+    3.25,
+    5.65
+   ],
+   "mean": 4.35,
+   "n": 20
+  },
+  "yo|en|list_lines": {
+   "ci": [
+    4.45,
+    7.8
+   ],
+   "mean": 6.1,
+   "n": 20
+  },
+  "yo|l2|eq_steps": {
+   "ci": [
+    1.95,
+    3.25
+   ],
+   "mean": 2.6,
+   "n": 20
+  },
+  "yo|l2|list_lines": {
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "mean": 0.0,
+   "n": 20
+  },
+  "zu|en|eq_steps": {
+   "ci": [
+    4.05,
+    6.5
+   ],
+   "mean": 5.15,
+   "n": 20
+  },
+  "zu|en|list_lines": {
+   "ci": [
+    6.15,
+    9.6
+   ],
+   "mean": 7.75,
+   "n": 20
+  },
+  "zu|l2|eq_steps": {
+   "ci": [
+    2.75,
+    4.45
+   ],
+   "mean": 3.55,
+   "n": 20
+  },
+  "zu|l2|list_lines": {
+   "ci": [
+    0.0,
+    0.8
+   ],
+   "mean": 0.3,
+   "n": 20
+  }
+ }
+}

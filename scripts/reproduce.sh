@@ -24,5 +24,6 @@ fi
 python -m probe.score --lid "$T/glotlid.bin" --run $TR/$M.math.jsonl --run $TR/$M.piqa.jsonl --out results
 python -m probe.trace_lid_check --lid "$T/glotlid.bin" --run $TR/$M.math.jsonl --run $TR/$M.piqa.jsonl
 python -m probe.examples --traces $TR/$M.math.jsonl $TR/$M.piqa.jsonl
+python -m probe.error_coding
 python -m probe.figures --lid "$T/glotlid.bin" --results results --out docs/figures
 python -m probe.report

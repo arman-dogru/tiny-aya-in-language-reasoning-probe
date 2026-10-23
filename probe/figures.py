@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
 from probe.langs import LANGS  # noqa: E402
-from probe.stats import avg_rank, sig3  # noqa: E402
+from probe.stats import avg_rank, bootstrap_mean, sig3  # noqa: E402
 
 plt.rcParams.update({"font.size": 9, "axes.spines.top": False, "axes.spines.right": False,
                      "svg.hashsalt": "aya", "figure.dpi": 110})
@@ -295,28 +295,34 @@ def fig_trace_lid(rows, model, out):
 
 
 def fig_structure(rows, model, out):
-    """Error-analysis view: explicit arithmetic steps ('=' count) per math trace, by language and arm,
-    split by whether the answer was right."""
+    """Error-analysis view: explicit arithmetic steps ('=' count) and list lines per math trace, by language
+    and arm: mean with bootstrap 95% CI (all 20 traces), plus faded markers for the correct / wrong subsets."""
     langs = LANG_ORDER["math"]
-    fig, axes = plt.subplots(1, 2, figsize=(11, 3.2), sharey=True)
+    fig, axes = plt.subplots(1, 2, figsize=(11, 3.4), sharey=True)
     for ax, (key, title) in zip(axes, [("eq_steps", "explicit arithmetic steps ('=' signs) per trace"),
                                        ("list_lines", "numbered / bulleted lines per trace")]):
         for j, arm in enumerate(["l2", "en"]):
             for i, l in enumerate(langs):
-                for c, mk, dx in [("1", "o", -0.08), ("0", "x", 0.08)]:
-                    v = [float(r[key]) for r in rows if r["model"] == model and r["arm"] == arm and r["task"] == "math"
-                         and r["lang"] == l and r["correct"] == c]
-                    if v:
-                        ax.scatter([i + (j - 0.5) * 0.4 + dx], [np.mean(v)], marker=mk, c=ARM_COL[arm], s=10 + 3 * len(v))
+                sel = [r for r in rows if r["model"] == model and r["arm"] == arm and r["task"] == "math" and r["lang"] == l]
+                v = [float(r[key]) for r in sel]
+                if not v:
+                    continue
+                m, lo, hi = bootstrap_mean(v, iters=4000, seed=20261022)
+                x = i + (j - 0.5) * 0.36
+                ax.errorbar([x], [m], yerr=nonneg([[m - lo], [hi - m]]), fmt="s", ms=5, c=ARM_COL[arm], capsize=2, lw=1)
+                for c, mk, dx in [("1", "o", 0.09), ("0", "x", 0.09)]:
+                    vc = [float(r[key]) for r in sel if r["correct"] == c]
+                    if vc:
+                        ax.scatter([x + dx], [np.mean(vc)], marker=mk, c=ARM_COL[arm], s=14, alpha=0.5)
         ax.set_xticks(range(len(langs)), langs)
         ax.set_title(title, fontsize=9)
-    axes[0].set_ylabel("mean per trace (MGSM / AfriMGSM)")
+    axes[0].set_ylabel("mean per trace (MGSM / AfriMGSM, n=20 per point)")
     for arm in ["l2", "en"]:
-        axes[0].scatter([], [], c=ARM_COL[arm], marker="s", label=ARM_NAME[arm])
-    axes[0].scatter([], [], c="k", marker="o", label="correct (marker area ∝ n)")
-    axes[0].scatter([], [], c="k", marker="x", label="wrong")
+        axes[0].errorbar([], [], yerr=[], fmt="s", c=ARM_COL[arm], label=f"{ARM_NAME[arm]}: mean, bootstrap 95% CI")
+    axes[0].scatter([], [], c="k", marker="o", alpha=0.5, label="mean of correct traces")
+    axes[0].scatter([], [], c="k", marker="x", alpha=0.5, label="mean of wrong traces")
     axes[0].legend(fontsize=7, frameon=False)
-    fig.suptitle(f"{model}: how decomposed are the traces? (per language: left pair = L2-forced, right pair = En-forced)", y=1.03)
+    fig.suptitle(f"{model}: how decomposed are the traces? (per language: left = L2-forced, right = En-forced)", y=1.03)
     save(fig, out, "reasoning_structure.png")
 
 
