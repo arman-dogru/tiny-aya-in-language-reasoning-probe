@@ -1,0 +1,58 @@
+[
+ {
+  "label": "[1] mgsm-000-zu · l2",
+  "rule": "1: L2 wrong, En right (low-resource math)",
+  "arm": "l2",
+  "id": "mgsm-000-zu",
+  "trace": "Amadada kaJanet azalela amaqanda angu-16 ngosuku. Udla amathathu ngosuku njalo ekuseni, ngakho-ke udla amaqanda angu-3/7 = 0.4286 ngamadada ngosuku. Udla amamafini enzela abangani bakhe zonke izinsuku ngamane, ngakho-ke udla amaqanda angu-4/7 = 0.5714 ngamadada ngosuku. Ngakho-ke, udla amaqanda angu-0.4286 + 0.5714 = 0.9 amane ngosuku. Udayisa asele emakethe yamafama ngo $2 ngeqanda elikahle ledada. Ngakho-ke, imali ayenzayo ngosuku emakethe yamafama ingu-0.9 * $2 = $1.8."
+ },
+ {
+  "label": "[1] mgsm-000-zu · en",
+  "rule": "1: L2 wrong, En right (low-resource math)",
+  "arm": "en",
+  "id": "mgsm-000-zu",
+  "trace": "1. **Daily Egg Production**: Janet lays **16 eggs** daily.  \n2. **Breakfast Consumption**: She eats **3 eggs** each morning.  \n3. **Baking Use**: She bakes **4 loaves of bread** using **4 eggs** each day.  \n4. **Market Sales**: She sells the remaining eggs daily at **$2 per egg**.  \n\n**Calculation**:  \n- **Eggs used for baking**: 4 eggs/day × 4 days = **16 eggs**.  \n- **Eggs sold**: 16 eggs (laid) – 3 eggs (breakfast) – 4 eggs (baking) = **9 eggs**.  \n- **Daily earnings**: 9 eggs × $2 = **$18**.  \n\n**Final Answer**:"
+ },
+ {
+  "label": "[2] mgsm-049-yo · l2",
+  "rule": "2: L2 right, En wrong (low-resource math)",
+  "arm": "l2",
+  "id": "mgsm-049-yo",
+  "trace": "Àjà kọ̀ọ̀kan ní ojúlé 8, nítorí náà àpapọ̀ ojúlé ni 15 × 8 = 120. Nítorí 3/4 ilé ti gbà, 1/4 kò tíì gbà. Ṣe ìṣirò 1/4 ti 120: 120 × 1/4 = 30. Nítorí náà, àpapọ̀ ojúlé tí wọn ò tíì gbà ni 30."
+ },
+ {
+  "label": "[2] mgsm-049-yo · en",
+  "rule": "2: L2 right, En wrong (low-resource math)",
+  "arm": "en",
+  "id": "mgsm-049-yo",
+  "trace": "1. **Total rooms**: 15.  \n2. **Rooms already occupied**: \\( \\frac{3}{4} \\times 15 = \\frac{45}{4} = 11.25 \\). Since rooms are whole, this rounds to **11 occupied rooms**.  \n3. **Rooms not yet occupied**: \\( 15 - 11 = 4 \\).  \n4. **Total unoccupied rooms**: 4.  \n5. **Average unoccupied rooms**: \\( \\frac{4}{15} \\).  \n\nFinal Answer:"
+ },
+ {
+  "label": "[3] piqa-000080-sw · l2",
+  "rule": "3: highest repetition L2 trace (rep4=0.81)",
+  "arm": "l2",
+  "id": "piqa-000080-sw",
+  "trace": "1. **Maji ya kawaida** yana molekuli za maji tu, hivyo hayana chumvi.  \n2. **Maji ya chumvi** yana chumvi (kama vile NaCl), ambayo huongeza mvutano wa uso na kupunguza kiwango cha mvuke wa maji.  \n3. **Mvutano wa uso** hupunguza kasi ya kuganda kwa maji kwa sababu maji yanahitaji kuvunja vifungo vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai vyai"
+ },
+ {
+  "label": "[4] piqa-000000-fr-CA · l2",
+  "rule": "4: Canadian French PIQA",
+  "arm": "l2",
+  "id": "piqa-000000-fr-CA",
+  "trace": "Lorsque l'on pose un objet sur le sac en plastique rempli d'air, la pression externe due à l'objet exerce une force sur le sac. Cette force provoque une compression de l'air à l'intérieur du sac. Selon le principe de Boyle (la pression et le volume sont inversement proportionnels à la température et au nombre de moles), la pression augmente tandis que le volume diminue. Ainsi, la quantité d'air dans le sac diminue.  \n\nRéponse finale :  \nB. La quantité d’air dans le sac diminue."
+ },
+ {
+  "label": "[4] piqa-000000-fr-CA · en",
+  "rule": "4: Canadian French PIQA",
+  "arm": "en",
+  "id": "piqa-000000-fr-CA",
+  "trace": "When an object is placed on a sealed plastic bag filled with air, the object exerts pressure on the bag's walls. This pressure increases the force exerted by the air molecules inside the bag. According to Boyle's Law, if the volume of the gas remains constant, an increase in pressure (due to added mass) results in a decrease in the number of gas molecules. Thus, the air inside the bag decreases.  \n\nFinal Answer:  \nB. La quantité d’air dans le sac diminue"
+ },
+ {
+  "label": "[5] piqa-000051-zu · l2",
+  "rule": "5: L2 trace with lowest prompt-language share (0.00)",
+  "arm": "l2",
+  "id": "piqa-000051-zu",
+  "trace": "Xa unyathela inkomishi yephepha, amandla adonsela phantsi asebenza kuyo. La mandla adala amandla okuphendula, apho amanzi (okanye isisombululo) ngaphakathi enkomishini aphendula ngokunyuka. Njengoko amanzi anyuka, adlulisa amandla adonsela phantsi, okubangela ukuba inkomishi iphenduke. Le nto ibizwa ngokuba yi-Archimedes' principle. Ngoko ke, inkomishi iyagxuma."
+ }
+]

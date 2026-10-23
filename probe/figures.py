@@ -83,7 +83,7 @@ def fig_accuracy(summ, model, arms, out):
 def fig_lid_heatmap(summ, model, arms, out):
     cols = [(t, l) for t in ["math", "piqa"] for l in LANG_ORDER[t]]
     arms = [a for a in arms if a != "direct"]
-    fig, axes = plt.subplots(1, 2, figsize=(12, 1.2 + 0.5 * len(arms)))
+    fig, axes = plt.subplots(1, 2, figsize=(13, 1.4 + 0.5 * len(arms)), gridspec_kw={"wspace": 0.35})
     for ax, key, title in zip(axes, ["l2", "en_trace"], ["trace in PROMPT language (L2 rate)",
                                                          "trace in ENGLISH"]):
         M = np.full((len(arms), len(cols)), np.nan)
@@ -99,7 +99,7 @@ def fig_lid_heatmap(summ, model, arms, out):
                     ax.text(j, i, f"{M[i, j]:.2f}", ha="center", va="center", fontsize=7,
                             color="w" if M[i, j] < 0.6 else "k")
         ax.set_xticks(range(len(cols)), [f"{t}\n{l}" for t, l in cols], fontsize=7)
-        ax.set_yticks(range(len(arms)), [ARM_NAME[a] for a in arms])
+        ax.set_yticks(range(len(arms)), [ARM_NAME[a].replace(" reasoning", "") for a in arms])
         ax.set_title(title)
         fig.colorbar(im, ax=ax, fraction=0.03)
     fig.suptitle(f"{model}: share of reasoning traces by GlotLID language (whole-trace label)", y=1.05)
@@ -118,8 +118,8 @@ def fig_rep_scatter(rows, arms, out):
             ax.scatter(x[cap], y[cap], s=40, marker="x", c=ARM_COL[arm], label=f"{ARM_NAME[arm]}: cap hit ({cap.sum()})")
         if len(x) > 3:
             rho = spearman(x, y)
-            ax.text(0.99, 0.95 - 0.07 * list(ARM_COL).index(arm) + 0.07, f"{arm}: Spearman ρ={rho:.2f}",
-                    transform=ax.transAxes, ha="right", fontsize=8, color=ARM_COL[arm])
+            ax.text(0.02, 0.62 - 0.07 * list(ARM_COL).index(arm), f"{arm}: Spearman ρ(tokens, rep4) = {rho:.2f}",
+                    transform=ax.transAxes, ha="left", fontsize=8, color=ARM_COL[arm])
     ax.set_xscale("log")
     ax.set_xlabel("generated reasoning tokens (log scale)")
     ax.set_ylabel("repetition score (share of repeated word 4-grams)")
@@ -186,13 +186,16 @@ def fig_tokens(summ, model, arms, out):
 
 
 def fig_groups(summ, model, arms, out):
+    all_arms = arms
     arms = [a for a in arms if a != "direct"]
     groups = ["control", "high", "low"]
     gname = {"control": "English\n(control)", "high": "French\n(fr + fr-CA)", "low": "low-resource\n(sw, yo, zu)"}
-    fig, axes = plt.subplots(1, 3, figsize=(11, 3.2))
-    for ax, (key, title) in zip(axes, [("acc", "accuracy"), ("l2", "L2 reasoning rate"), ("tokens", "mean tokens")]):
-        w = 0.8 / len(arms)
-        for j, arm in enumerate(arms):
+    fig, axes = plt.subplots(1, 3, figsize=(12, 3.4))
+    for ax, (key, title) in zip(axes, [("acc", "accuracy"), ("l2", "L2 rate (trace in prompt language)"),
+                                       ("tokens", "mean generated tokens")]):
+        use = all_arms if key == "acc" else arms
+        w = 0.8 / len(use)
+        for j, arm in enumerate(use):
             xs, ys, err = [], [], [[], []]
             for i, g in enumerate(groups):
                 c = summ.get(f"{model}|{arm}|all|group:{g}")
@@ -202,7 +205,7 @@ def fig_groups(summ, model, arms, out):
                     m, lo, hi = c["tokens"]
                 else:
                     m, (lo, hi) = c[key], c[key + "_ci"]
-                xs.append(i + (j - (len(arms) - 1) / 2) * w)
+                xs.append(i + (j - (len(use) - 1) / 2) * w)
                 ys.append(m)
                 err[0].append(m - lo)
                 err[1].append(hi - m)
@@ -263,6 +266,33 @@ def fig_strips(examples, lid, out):
     save(fig, out, "example_trace_strips.png")
 
 
+def fig_trace_lid(rows, model, out):
+    """Sentence-level check of the whole-trace label: distribution of the prompt-language share
+    (L2-forced arm) and English share (En-forced arm) per cell, non-English prompts only."""
+    cells = [(t, l) for t in ["math", "piqa"] for l in LANG_ORDER[t] if l != "en"]
+    fig, ax = plt.subplots(figsize=(10, 3.4))
+    for k, (arm, key) in enumerate([("l2", "target_share"), ("en", "english_share")]):
+        data = []
+        for t, l in cells:
+            v = [float(r[key]) for r in rows if r["model"] == model and r["arm"] == arm and r["task"] == t
+                 and r["lang"] == l and r[key] != ""]
+            data.append(v if v else [np.nan])
+        pos = np.arange(len(cells)) + (k - 0.5) * 0.36
+        bp = ax.boxplot(data, positions=pos, widths=0.3, patch_artist=True, showfliers=True,
+                        flierprops={"markersize": 3})
+        for b in bp["boxes"]:
+            b.set_facecolor(ARM_COL[arm])
+            b.set_alpha(0.7)
+        ax.plot([], [], "s", c=ARM_COL[arm], label=f"{ARM_NAME[arm]}: share of sentences in "
+                + ("the prompt language" if arm == "l2" else "English"))
+    ax.set_xticks(range(len(cells)), [f"{t}\n{l}" for t, l in cells])
+    ax.set_ylim(-0.03, 1.03)
+    ax.set_ylabel("character-weighted share of\nsentence segments (GlotLID)")
+    ax.set_title("Trace-level language check: is the forced language held sentence by sentence?")
+    ax.legend(fontsize=7, frameon=False, loc="lower left")
+    save(fig, out, "trace_language_purity.png")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--results", default="results")
@@ -283,6 +313,7 @@ def main():
         fig_forest(pair, a.model, "l2", "direct", a.out, "paired_l2_vs_direct.png")
     fig_tokens(summ, a.model, arms, a.out)
     fig_groups(summ, a.model, arms, a.out)
+    fig_trace_lid(rows, a.model, a.out)
     fig_lid_validation(json.load(open(os.path.join(a.results, "lid_validation.json"))), a.out)
     ex_path = os.path.join(a.results, "examples.json")
     if os.path.exists(ex_path):
