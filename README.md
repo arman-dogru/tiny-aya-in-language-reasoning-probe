@@ -233,7 +233,7 @@ Holm / BH adjust the cluster sign-flip p over the family of **17 distinct** l2-v
 - **Canadian French.** fr-CA appears only in Global PIQA; MGSM has no fr-CA split. LID cannot separate fr-CA from fr-FR, and the fr-CA prompts used the France-French MGSM opener ("Réponse étape par étape :").
 - **Zulu opener** was written by the author and is not native-checked. **Answer parsing:** lenient parsing (last number or option letter) is the primary metric; strict `####`-only accuracy and format-compliance rates are in [`results/summary.json`](results/summary.json) (`acc_strict`, `format_rate`).
 - **The repetition score** uses word 4-grams. The paper's Eq. 1, Σ_{c>1}(c−1)/Σc over n-gram counts c, is algebraically identical to `rep4` = 1 − unique/total, so the formula matches. Only the tokenization may differ from the paper's: here, n-grams are over lower-cased alphabetic words, with numbers and punctuation dropped (`probe/metrics.py`).
-- **Possible contamination.** MGSM is a translation of GSM8K test questions, and Global PIQA was public before Tiny Aya was released, so some items may have been seen in training. This affects both arms equally, so the paired comparisons are not biased by it, but absolute accuracies may be inflated.
+- **Possible contamination.** MGSM is a translation of GSM8K test questions, and Global PIQA was public before Tiny Aya was released, so some items may have been seen in training. Both arms see the same items, so this mainly inflates absolute accuracies. It could also bias the paired comparison: if memorized solutions are English, they might favour En-forced reasoning. This study cannot measure that.
 - **Compute.** The run was generated on a shared 8-core box under heavy load (load average ≈ 24 from other jobs), on two single-thread llama.cpp servers at about 1 token/s per slot. One server crashed overnight, and generation was resumed from the on-disk JSONL with no lost or duplicated traces (`(id, arm)` uniqueness is checked in `probe/score.py`).
 
 
@@ -241,7 +241,7 @@ Holm / BH adjust the cluster sign-flip p over the family of **17 distinct** l2-v
 
 ```bash
 python -m venv .venv && . .venv/bin/activate
-bash scripts/setup.sh                 # pinned llama.cpp b11815, GGUF and GlotLID, sha256-checked
+bash scripts/setup.sh                 # pinned llama.cpp b11815, GGUF and GlotLID, sha256-checked (reproduce.sh also runs it)
 bash scripts/reproduce.sh             # slice -> LID check -> generation -> score -> figures -> tables
 SKIP_GENERATION=1 bash scripts/reproduce.sh   # rescore/replot the committed traces only: GlotLID (~1.7 GB) + pip deps, no GGUF/llama.cpp, keeps data/slice.jsonl; 74 s on the busy box, and it reproduced every committed result, table and figure byte-for-byte
 python -m pytest -q tests
