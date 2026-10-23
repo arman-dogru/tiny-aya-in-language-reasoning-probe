@@ -1,0 +1,137 @@
+{
+ "en": {
+  "n_docs": 40,
+  "doc_acc": 1.0,
+  "doc_acc_ci": [
+   0.9123783975415363,
+   1.0
+  ],
+  "doc_acc_lenient": 1.0,
+  "n_segments": 110,
+  "seg_acc": 1.0,
+  "seg_acc_ci": [
+   0.9662560641874632,
+   1.0
+  ],
+  "doc_labels": {
+   "eng_Latn": 40
+  },
+  "seg_labels": {
+   "eng_Latn": 110
+  }
+ },
+ "fr": {
+  "n_docs": 40,
+  "doc_acc": 1.0,
+  "doc_acc_ci": [
+   0.9123783975415363,
+   1.0
+  ],
+  "doc_acc_lenient": 1.0,
+  "n_segments": 110,
+  "seg_acc": 1.0,
+  "seg_acc_ci": [
+   0.9662560641874632,
+   1.0
+  ],
+  "doc_labels": {
+   "fra_Latn": 40
+  },
+  "seg_labels": {
+   "fra_Latn": 110
+  }
+ },
+ "fr-CA": {
+  "n_docs": 20,
+  "doc_acc": 1.0,
+  "doc_acc_ci": [
+   0.8388748398148705,
+   1.0
+  ],
+  "doc_acc_lenient": 1.0,
+  "n_segments": 41,
+  "seg_acc": 1.0,
+  "seg_acc_ci": [
+   0.9143324285798755,
+   1.0
+  ],
+  "doc_labels": {
+   "fra_Latn": 20
+  },
+  "seg_labels": {
+   "fra_Latn": 41
+  }
+ },
+ "sw": {
+  "n_docs": 40,
+  "doc_acc": 0.975,
+  "doc_acc_ci": [
+   0.8711863091181636,
+   0.9955731685462955
+  ],
+  "doc_acc_lenient": 0.975,
+  "n_segments": 110,
+  "seg_acc": 0.9818181818181818,
+  "seg_acc_ci": [
+   0.9361198348655373,
+   0.9949996451696546
+  ],
+  "doc_labels": {
+   "swh_Latn": 36,
+   "swc_Latn": 3,
+   "wmw_Latn": 1
+  },
+  "seg_labels": {
+   "swh_Latn": 91,
+   "swc_Latn": 17,
+   "nya_Latn": 1,
+   "wmw_Latn": 1
+  }
+ },
+ "yo": {
+  "n_docs": 40,
+  "doc_acc": 1.0,
+  "doc_acc_ci": [
+   0.9123783975415363,
+   1.0
+  ],
+  "doc_acc_lenient": 1.0,
+  "n_segments": 110,
+  "seg_acc": 1.0,
+  "seg_acc_ci": [
+   0.9662560641874632,
+   1.0
+  ],
+  "doc_labels": {
+   "yor_Latn": 40
+  },
+  "seg_labels": {
+   "yor_Latn": 110
+  }
+ },
+ "zu": {
+  "n_docs": 40,
+  "doc_acc": 0.975,
+  "doc_acc_ci": [
+   0.8711863091181636,
+   0.9955731685462955
+  ],
+  "doc_acc_lenient": 1.0,
+  "n_segments": 104,
+  "seg_acc": 0.9423076923076923,
+  "seg_acc_ci": [
+   0.879810731516353,
+   0.9732934545209193
+  ],
+  "doc_labels": {
+   "zul_Latn": 39,
+   "nde_Latn": 1
+  },
+  "seg_labels": {
+   "zul_Latn": 98,
+   "nde_Latn": 4,
+   "xho_Latn": 1,
+   "nbl_Latn": 1
+  }
+ }
+}

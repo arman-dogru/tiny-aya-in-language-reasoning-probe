@@ -7,3 +7,4 @@ raw/
 *.gguf
 *.bin
 .pytest_cache/
+tools
