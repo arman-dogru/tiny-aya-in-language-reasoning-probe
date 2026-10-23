@@ -1,9 +1,14 @@
 """Generate reasoning traces against a local llama.cpp server (CPU).
 
 One JSONL record per (model, arm, item). The run is resumable: records already
-present in the output file are skipped. Decoding is greedy (temperature 0) so a
-rerun with the same GGUF, llama.cpp build and thread count reproduces the
-traces; the model cards recommend temperature 0.6 / top-p 0.95, see README
+present in the output file are skipped. Decoding is greedy (temperature 0), but
+greedy is NOT sufficient for reproducibility: the committed 660 traces were made
+with `-np 2` continuous batching + prompt-cache reuse, and a rerun with the same
+build/GGUF/flags changed the text of 4 of 6 traces (correctness unchanged; see
+docs/determinism.md). Defaults are therefore now `--workers 1` (use with a
+`-np 1` server) and `cache_prompt: false`, which is the configuration checked
+byte-identical in results/determinism/. The model cards recommend temperature
+0.6 / top-p 0.95, see README
 "Limitations".
 
 Arms
@@ -85,9 +90,11 @@ class Server:
     def template(self, msg: str) -> str:
         return self.post("/apply-template", {"messages": [{"role": "user", "content": msg}]})["prompt"]
 
+    cache_prompt = False
+
     def complete(self, prompt: str, n: int, stop: list[str] | None = None) -> dict:
         body = {"prompt": prompt, "n_predict": n, "temperature": 0.0, "top_k": 1, "seed": 0,
-                "cache_prompt": True, "stop": stop or []}
+                "cache_prompt": self.cache_prompt, "stop": stop or []}
         return self.post("/completion", body)
 
 
@@ -137,7 +144,10 @@ def main() -> None:
     ap.add_argument("--langs", default="")
     ap.add_argument("--limit-per-cell", type=int, default=0, help="use only the first N items per (task,lang)")
     ap.add_argument("--max-think", type=int, default=768)
-    ap.add_argument("--workers", type=int, default=2)
+    ap.add_argument("--workers", type=int, default=1,
+                    help="concurrent requests; >1 (with a -np>1 server) is faster but not bit-reproducible")
+    ap.add_argument("--cache-prompt", action="store_true",
+                    help="reuse the server prompt cache (faster; used for the committed 660 traces; not bit-reproducible)")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
 
@@ -160,6 +170,7 @@ def main() -> None:
             r = json.loads(l)
             done.add((r["id"], r["arm"]))
     srv = Server(a.server)
+    srv.cache_prompt = a.cache_prompt
     props = srv.props()
     meta = dict(model_path=os.path.basename(props.get("model_path", "")), build=props.get("build_info", ""),
                 n_ctx=props.get("default_generation_settings", {}).get("n_ctx"))

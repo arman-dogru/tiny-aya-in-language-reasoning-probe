@@ -1,0 +1,11 @@
+6 jobs to run (0 already done) meta={'model_path': 'tiny-aya-global-q4_k_m.gguf', 'build': 'b11815-7170cad4d', 'n_ctx': 3072}
+[1/6] mgsm-000-sw direct tok=3 cap=False 26.65s elapsed=0.4m
+[2/6] mgsm-000-sw en tok=95 cap=False 80.06s elapsed=1.8m
+[3/6] mgsm-000-yo direct tok=3 cap=False 9.19s elapsed=1.9m
+[4/6] mgsm-000-sw l2 tok=119 cap=False 128.88s elapsed=2.1m
+[5/6] mgsm-000-yo l2 tok=54 cap=False 47.94s elapsed=2.7m
+[6/6] mgsm-000-yo en tok=94 cap=False 65.57s elapsed=3.2m
+
+real	3m14.665s
+user	0m0.059s
+sys	0m0.021s
