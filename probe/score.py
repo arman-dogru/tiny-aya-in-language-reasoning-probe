@@ -14,7 +14,7 @@ import os
 from collections import defaultdict
 
 from probe.langs import LANGS, LENIENT_EXTRA
-from probe.metrics import LID, parse_answer, parse_answer_lenient, repetition_score, split_trace
+from probe.metrics import LID, parse_answer, parse_answer_lenient, repetition_score, split_trace, structure
 from probe.stats import bootstrap_mean, mcnemar_exact, paired_bootstrap_diff, wilson
 
 GROUPS = {"high": ["fr", "fr-CA"], "low": ["sw", "yo", "zu"], "control": ["en"]}
@@ -52,7 +52,8 @@ def score_run(path: str, think: str, lid: LID) -> list[dict]:
             target_share=round(sum(v for k, v in shares.items() if k in tgt), 4) if shares else "",
             english_share=round(shares.get("eng_Latn", 0.0), 4) if shares else "",
             rep4=(lambda x: "" if x is None else round(x, 4))(repetition_score(trace)) if trace else "",
-            trace_words=len(trace.split()), wall_s=r["wall_s"],
+            trace_words=len(trace.split()), eq_steps=structure(trace)[0], list_lines=structure(trace)[1],
+            wall_s=r["wall_s"],
         ))
     return rows
 
@@ -72,6 +73,8 @@ def cell_summary(rs: list[dict]) -> dict:
             out[key] = kk / n
             out[key + "_ci"] = wilson(kk, n)
         out["tokens"] = bootstrap_mean([r["gen_tokens"] for r in rs])
+        out["eq_steps"] = bootstrap_mean([r["eq_steps"] for r in rs])
+        out["list_lines"] = bootstrap_mean([r["list_lines"] for r in rs])
         out["rep4"] = bootstrap_mean([r["rep4"] for r in rs if r["rep4"] != ""])
         out["lid_hist"] = dict(sorted(((lab, sum(1 for r in rs if r["trace_lid"] == lab)) for lab in
                                        {r["trace_lid"] for r in rs}), key=lambda x: -x[1]))

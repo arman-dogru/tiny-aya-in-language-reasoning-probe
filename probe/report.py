@@ -39,6 +39,18 @@ def per_lang_table(summ, model, task, arms):
     return "\n".join(h)
 
 
+def structure_table(summ, model, task, arms):
+    h = ["| language | arm | mean '=' steps [95% CI] | mean list lines [95% CI] |", "|---|---|---|---|"]
+    for l in LANG_ORDER[task]:
+        for arm in arms:
+            c = summ.get(f"{model}|{arm}|{task}|{l}")
+            if not c or "eq_steps" not in c:
+                continue
+            e, li = c["eq_steps"], c["list_lines"]
+            h.append(f"| {LANGS[l]['name']} | {arm} | {e[0]:.1f} [{e[1]:.1f}, {e[2]:.1f}] | {li[0]:.1f} [{li[1]:.1f}, {li[2]:.1f}] |")
+    return "\n".join(h)
+
+
 def paired_table(pair, model, a, b):
     h = [f"| task | slice | n pairs | acc {a} | acc {b} | Δ ({a}−{b}) [95% CI] | {a}-only right | {b}-only right | McNemar p | Δ tokens [95% CI] |",
          "|---|---|---:|---:|---:|---|---:|---:|---:|---|"]
@@ -69,6 +81,7 @@ def main():
     doc = [f"# Results tables: {a.model}\n", src + "\n"]
     for task in ["math", "piqa"]:
         doc += [f"## Per language: {task}\n", per_lang_table(summ, a.model, task, arms), ""]
+    doc += ["## Trace structure (error analysis): math\n", structure_table(summ, a.model, "math", [x for x in arms if x != "direct"]), ""]
     for x, y in [("l2", "en"), ("l2", "direct"), ("en", "direct")]:
         if x in arms and y in arms:
             doc += [f"## Paired: {x} vs {y}\n", paired_table(pair, a.model, x, y), ""]

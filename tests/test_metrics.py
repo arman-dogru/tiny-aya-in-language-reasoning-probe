@@ -70,3 +70,8 @@ def test_lenient_parser():
     assert pl("so 9 x 2 = 18.", "math") == "18"
     assert pl("#### 7\nlater 9", "math") == "7"  # strict answer line wins
     assert pl("I think so", "piqa") is None
+
+
+def test_structure():
+    from probe.metrics import structure
+    assert structure("1. a = 2\n2. b = 3\n- c\nplain") == (2, 3)

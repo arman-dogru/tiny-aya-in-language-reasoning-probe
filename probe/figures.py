@@ -293,6 +293,32 @@ def fig_trace_lid(rows, model, out):
     save(fig, out, "trace_language_purity.png")
 
 
+def fig_structure(rows, model, out):
+    """Error-analysis view: explicit arithmetic steps ('=' count) per math trace, by language and arm,
+    split by whether the answer was right."""
+    langs = LANG_ORDER["math"]
+    fig, axes = plt.subplots(1, 2, figsize=(11, 3.2), sharey=True)
+    for ax, (key, title) in zip(axes, [("eq_steps", "explicit arithmetic steps ('=' signs) per trace"),
+                                       ("list_lines", "numbered / bulleted lines per trace")]):
+        for j, arm in enumerate(["l2", "en"]):
+            for i, l in enumerate(langs):
+                for c, mk, dx in [("1", "o", -0.08), ("0", "x", 0.08)]:
+                    v = [float(r[key]) for r in rows if r["model"] == model and r["arm"] == arm and r["task"] == "math"
+                         and r["lang"] == l and r["correct"] == c]
+                    if v:
+                        ax.scatter([i + (j - 0.5) * 0.4 + dx], [np.mean(v)], marker=mk, c=ARM_COL[arm], s=10 + 3 * len(v))
+        ax.set_xticks(range(len(langs)), langs)
+        ax.set_title(title, fontsize=9)
+    axes[0].set_ylabel("mean per trace (MGSM / AfriMGSM)")
+    for arm in ["l2", "en"]:
+        axes[0].scatter([], [], c=ARM_COL[arm], marker="s", label=ARM_NAME[arm])
+    axes[0].scatter([], [], c="k", marker="o", label="correct (marker area ∝ n)")
+    axes[0].scatter([], [], c="k", marker="x", label="wrong")
+    axes[0].legend(fontsize=7, frameon=False)
+    fig.suptitle(f"{model}: how decomposed are the traces? (per language: left pair = L2-forced, right pair = En-forced)", y=1.03)
+    save(fig, out, "reasoning_structure.png")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--results", default="results")
@@ -314,6 +340,7 @@ def main():
     fig_tokens(summ, a.model, arms, a.out)
     fig_groups(summ, a.model, arms, a.out)
     fig_trace_lid(rows, a.model, a.out)
+    fig_structure(rows, a.model, a.out)
     fig_lid_validation(json.load(open(os.path.join(a.results, "lid_validation.json"))), a.out)
     ex_path = os.path.join(a.results, "examples.json")
     if os.path.exists(ex_path):

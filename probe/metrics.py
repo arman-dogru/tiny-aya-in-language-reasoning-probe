@@ -78,6 +78,14 @@ def repetition_score(text: str, n: int = 4) -> float | None:
     return 1.0 - len(set(grams)) / len(grams)
 
 
+def structure(text: str) -> tuple[int, int]:
+    """(explicit arithmetic steps = count of '=' signs, list/step lines = lines starting with a
+    number, '-', '*' or a bold heading). A crude proxy for how decomposed a trace is."""
+    eq = text.count("=")
+    lines = sum(1 for ln in text.splitlines() if re.match(r"\s*(\d+[.)]|[-*•]|\*\*)\s*", ln))
+    return eq, lines
+
+
 def lid_clean(text: str) -> str:
     """Strip LaTeX, math, numbers and markup before language ID."""
     t = re.sub(r"\\\[.*?\\\]|\\\(.*?\\\)|\$\$.*?\$\$", " ", text, flags=re.S)
