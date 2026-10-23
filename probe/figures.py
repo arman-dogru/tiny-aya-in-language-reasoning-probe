@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
 from probe.langs import LANGS  # noqa: E402
-from probe.stats import sig3  # noqa: E402
+from probe.stats import avg_rank, sig3  # noqa: E402
 
 plt.rcParams.update({"font.size": 9, "axes.spines.top": False, "axes.spines.right": False,
                      "svg.hashsalt": "aya", "figure.dpi": 110})
@@ -130,9 +130,8 @@ def fig_rep_scatter(rows, arms, out):
 
 
 def spearman(x, y):
-    rx = np.argsort(np.argsort(x)).astype(float)
-    ry = np.argsort(np.argsort(y)).astype(float)
-    return float(np.corrcoef(rx, ry)[0, 1])
+    """Spearman rho with tied values given their average rank (m2)."""
+    return float(np.corrcoef(avg_rank(x), avg_rank(y))[0, 1])
 
 
 def fig_forest(pair, model, a, b, out, name):

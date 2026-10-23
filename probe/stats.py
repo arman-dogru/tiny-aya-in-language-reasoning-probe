@@ -124,3 +124,19 @@ def sig3(p: float) -> str:
     if p >= 0.9995:
         return "1.00"
     return f"{p:#.3g}" if p >= 0.001 else f"{p:.2e}"
+
+
+def avg_rank(x):
+    """Ranks 0..n-1 with ties given the mean of the ranks they span (as scipy.stats.rankdata - 1)."""
+    x = [float(v) for v in x]
+    order = sorted(range(len(x)), key=lambda k: x[k])
+    r = [0.0] * len(x)
+    i = 0
+    while i < len(x):
+        j = i
+        while j + 1 < len(x) and x[order[j + 1]] == x[order[i]]:
+            j += 1
+        for k in order[i:j + 1]:
+            r[k] = (i + j) / 2
+        i = j + 1
+    return r

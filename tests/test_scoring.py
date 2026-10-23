@@ -126,3 +126,11 @@ def test_empty_trace_file_gives_clear_error(tmp_path):
     p.write_text("")
     with pytest.raises(SystemExit, match="contains no traces"):
         score_run(str(p), "", FakeLID())
+
+
+def test_avg_rank_and_spearman_ties():
+    from probe.figures import spearman
+    from probe.stats import avg_rank
+    assert list(avg_rank([10, 20, 20, 5])) == [1.0, 2.5, 2.5, 0.0]
+    # with ties, ordinal ranks (argsort of argsort) give 1.0 here; tie-averaged gives 0.866
+    assert spearman([0, 0, 1], [1, 2, 3]) == pytest.approx(0.8660254, abs=1e-6)

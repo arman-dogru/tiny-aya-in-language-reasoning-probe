@@ -104,7 +104,7 @@ The manipulation worked: the L2-forced arm reasons in the prompt language for ne
 
 *Data: [`results/summary.json`](results/summary.json) (`tokens`) · script: [`probe/figures.py`](probe/figures.py) (`fig_tokens`).*
 
-Traces are short for both arms: median 148 generated tokens, 5th–95th percentile 69–294, across all 440 reasoning traces. Only 3 of the 440 hit the 512-token cap. Repetition and length are positively correlated (Spearman ρ = 0.44 for L2-forced and 0.49 for En-forced; shown on the plot), which matches the blog's observation in miniature. At this scale, though, doomlooping is a handful of traces, not a regime. Forcing in-language reasoning does **not** make this model think longer.
+Traces are short for both arms: median 148 generated tokens, 5th–95th percentile 69–294, across all 440 reasoning traces. Only 3 of the 440 hit the 512-token cap. Repetition and length are positively correlated (Spearman ρ = 0.49 for L2-forced and 0.53 for En-forced, n = 220 each, tied values given average ranks; shown on the plot), which matches the blog's observation in miniature. At this scale, though, doomlooping is a handful of traces, not a regime. Forcing in-language reasoning does **not** make this model think longer.
 
 ### 4. Error analysis: why does L2 reasoning lose on low-resource math?
 
