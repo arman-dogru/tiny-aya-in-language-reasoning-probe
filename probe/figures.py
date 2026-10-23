@@ -232,7 +232,7 @@ def fig_lid_validation(lidv, out):
     ax.set_xticks(range(len(langs)), langs)
     ax.set_ylim(0.5, 1.02)
     ax.set_ylabel("GlotLID label = target")
-    ax.set_title("Language-ID sanity check on gold human-written questions")
+    ax.set_title("Language-ID sanity check on gold dataset questions")
     ax.legend(fontsize=7, frameon=False, loc="lower left")
     save(fig, out, "lid_validation.png")
 

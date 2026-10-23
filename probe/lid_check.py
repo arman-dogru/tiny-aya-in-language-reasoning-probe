@@ -1,4 +1,4 @@
-"""Validate the language-ID model on gold human-written text before trusting it on traces.
+"""Validate the language-ID model on gold dataset text (human-translated MGSM/AfriMGSM; post-edited MT for Global PIQA) before trusting it on traces.
 
 For every language in the slice, run GlotLID on (a) the slice's question texts and
 (b) sentence segments of them, and report how often the label lands in the target

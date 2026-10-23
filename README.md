@@ -57,9 +57,9 @@ flowchart LR
 
 ### Is the language ID trustworthy here?
 
-![Bar chart: share of gold human-written questions per language that GlotLID labels with the right language, whole question and per sentence; all languages are at or above about 94%.](docs/figures/lid_validation.png)
+![Bar chart: share of gold dataset questions per language that GlotLID labels with the right language, whole question and per sentence; all languages are at or above about 94%.](docs/figures/lid_validation.png)
 
-*Data: [`results/lid_validation.json`](results/lid_validation.json) · script: [`probe/lid_check.py`](probe/lid_check.py) · figure: [`probe/figures.py`](probe/figures.py).* GlotLID was run on the slice's own human-written questions before it was used on traces. Swahili sometimes comes back as Congo Swahili (`swc`), which counts as Swahili; Zulu is sometimes confused with other Nguni languages, so a lenient Zulu rate (also accepting `xho/nbl/ssw/nde`) is reported alongside. **GlotLID has a single `fra_Latn` label**, so the L2 rate cannot tell Canadian French from France French. The fr-CA result is about reasoning *on* Québécois-authored items, not about producing Québécois-register traces.
+*Data: [`results/lid_validation.json`](results/lid_validation.json) · script: [`probe/lid_check.py`](probe/lid_check.py) · figure: [`probe/figures.py`](probe/figures.py).* GlotLID was run on the slice's own gold questions before it was used on traces. These are human translations for MGSM and AfriMGSM, but Global PIQA *parallel* items were machine-translated from English and then corrected by a native speaker (per its dataset card), so they are post-edited MT, not originally authored text. Swahili sometimes comes back as Congo Swahili (`swc`), which counts as Swahili; Zulu is sometimes confused with other Nguni languages, so a lenient Zulu rate (also accepting `xho/nbl/ssw/nde`) is reported alongside. **GlotLID has a single `fra_Latn` label**, so the L2 rate cannot tell Canadian French from France French. The fr-CA result is about reasoning *on* Global PIQA's fr-CA items (English items machine-translated and then post-edited by a native speaker, so not Québécois-authored), not about producing Québécois-register traces. Cultural readings of the fr-CA numbers should be made with that in mind.
 
 ## Results
 
@@ -247,4 +247,4 @@ python -m pytest -q tests
 
 ## Licences and attribution
 
-Code: MIT. MGSM and Global PIQA are CC-BY-SA-4.0; AfriMGSM is Apache-2.0. `data/slice.jsonl` is a derived subset with the same licences. Tiny Aya Global is CC-BY-NC-4.0, so the committed traces are model outputs released for non-commercial research. GlotLID: see `cis-lmu/glotlid`.
+Licences differ by path; see [`DATA_LICENSE.md`](DATA_LICENSE.md). In short: code is MIT ([`LICENSE`](LICENSE)). `data/slice.jsonl` is a subset of MGSM (CC-BY-SA-4.0), AfriMGSM (Apache-2.0) and Global PIQA *parallel* (CC-BY-SA-4.0). The traces in `results/traces/` and `docs/examples.md` are Tiny Aya Global outputs (CC-BY-NC-4.0, plus the Cohere Labs Acceptable Use Policy) that contain dataset text. **Global PIQA's card forbids training AI systems on Global PIQA or on synthetic data seeded from it. That restriction applies to the PIQA traces and examples here: use them for evaluation and analysis only, never for training.**
