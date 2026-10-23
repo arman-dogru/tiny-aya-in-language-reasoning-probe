@@ -241,7 +241,7 @@ Holm / BH adjust the cluster sign-flip p over the family of **17 distinct** l2-v
 python -m venv .venv && . .venv/bin/activate
 bash scripts/setup.sh                 # pinned llama.cpp b11815, GGUF and GlotLID, sha256-checked
 bash scripts/reproduce.sh             # slice -> LID check -> generation -> score -> figures -> tables
-SKIP_GENERATION=1 bash scripts/reproduce.sh   # rescore/replot the committed traces only (< 1 min)
+SKIP_GENERATION=1 bash scripts/reproduce.sh   # rescore/replot the committed traces only: GlotLID (~1.7 GB) + pip deps, no GGUF/llama.cpp, keeps data/slice.jsonl; 74 s on the busy box, and it reproduced every committed result, table and figure byte-for-byte
 python -m pytest -q tests
 ```
 
