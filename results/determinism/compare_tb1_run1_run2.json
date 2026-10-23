@@ -1,0 +1,70 @@
+{
+ "label": "-t 1 -tb 1 -np 1, no prompt cache: run1 vs run2",
+ "a": "results/determinism/det_tb1_run1.jsonl",
+ "b": "results/determinism/det_tb1_run2.jsonl",
+ "n": 6,
+ "identical": 3,
+ "same_correctness": 6,
+ "rows": [
+  {
+   "id": "mgsm-000-sw",
+   "arm": "direct",
+   "identical": true,
+   "first_diff_char": null,
+   "tokens_a": 3,
+   "tokens_b": 3,
+   "correct_a": false,
+   "correct_b": false
+  },
+  {
+   "id": "mgsm-000-sw",
+   "arm": "en",
+   "identical": false,
+   "first_diff_char": 201,
+   "tokens_a": 96,
+   "tokens_b": 95,
+   "correct_a": true,
+   "correct_b": true
+  },
+  {
+   "id": "mgsm-000-sw",
+   "arm": "l2",
+   "identical": false,
+   "first_diff_char": 62,
+   "tokens_a": 102,
+   "tokens_b": 93,
+   "correct_a": true,
+   "correct_b": true
+  },
+  {
+   "id": "mgsm-000-yo",
+   "arm": "direct",
+   "identical": true,
+   "first_diff_char": null,
+   "tokens_a": 3,
+   "tokens_b": 3,
+   "correct_a": false,
+   "correct_b": false
+  },
+  {
+   "id": "mgsm-000-yo",
+   "arm": "en",
+   "identical": false,
+   "first_diff_char": 92,
+   "tokens_a": 76,
+   "tokens_b": 74,
+   "correct_a": true,
+   "correct_b": true
+  },
+  {
+   "id": "mgsm-000-yo",
+   "arm": "l2",
+   "identical": true,
+   "first_diff_char": null,
+   "tokens_a": 60,
+   "tokens_b": 60,
+   "correct_a": true,
+   "correct_b": true
+  }
+ ]
+}

@@ -5,9 +5,11 @@ present in the output file are skipped. Decoding is greedy (temperature 0), but
 greedy is NOT sufficient for reproducibility: the committed 660 traces were made
 with `-np 2` continuous batching + prompt-cache reuse, and a rerun with the same
 build/GGUF/flags changed the text of 4 of 6 traces (correctness unchanged; see
-docs/determinism.md). Defaults are therefore now `--workers 1` (use with a
-`-np 1` server) and `cache_prompt: false`, which is the configuration checked
-byte-identical in results/determinism/. The model cards recommend temperature
+docs/determinism.md). Defaults are now `--workers 1` (use with a `-np 1`
+server) and `cache_prompt: false`, the most conservative settings. They do NOT
+make this CPU build byte-reproducible either: two back-to-back runs of the same
+6 requests matched byte-for-byte on only 1/6 (-tb 2) and 3/6 (-tb 1) traces,
+with correctness unchanged (results/determinism/). The model cards recommend temperature
 0.6 / top-p 0.95, see README
 "Limitations".
 
