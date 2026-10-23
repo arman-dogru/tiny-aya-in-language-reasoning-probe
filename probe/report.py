@@ -10,6 +10,7 @@ import re
 
 from probe.figures import LANG_ORDER
 from probe.langs import LANGS
+from probe.stats import sig3
 
 
 def pct(x):
@@ -51,34 +52,68 @@ def structure_table(summ, model, task, arms):
     return "\n".join(h)
 
 
+ROW_ORDER = [(t, l) for t in ["math", "piqa"] for l in LANG_ORDER[t]] + \
+    [(t, f"group:{g}") for t in ["math", "piqa", "all"] for g in ["control", "high", "low"]]
+
+
+def ordered(pair, model, a, b):
+    for t, sl in ROW_ORDER:
+        k = f"{model}|{a}-{b}|{t}|{sl}"
+        if k in pair:
+            yield k, t, sl, pair[k]
+
+
 def paired_table(pair, model, a, b):
-    h = [f"| task | slice | n pairs | acc {a} | acc {b} | Δ ({a}−{b}) [95% CI] | {a}-only right | {b}-only right | McNemar p | Δ tokens [95% CI] |",
-         "|---|---|---:|---:|---:|---|---:|---:|---:|---|"]
-    for k, v in pair.items():
-        m, ab, task, sl = k.split("|")
-        if m != model or ab != f"{a}-{b}":
-            continue
+    adj = a == "l2" and b == "en"
+    h = [f"| task | slice | n pairs (clusters) | acc {a} | acc {b} | Δ ({a}−{b}) [95% clustered CI] | {a}-only right | {b}-only right | "
+         "cluster sign-flip p | " + ("Holm p | BH q | " if adj else "") + "exact McNemar p (ignores clustering) | Δ tokens [95% CI] |",
+         "|---|---|---:|---:|---:|---|---:|---:|---:|" + ("---:|---:|" if adj else "") + "---:|---|"]
+    for k, task, sl, v in ordered(pair, model, a, b):
         td = "" if b == "direct" else f"{v['tokens_diff']:+.0f} [{v['tokens_diff_ci'][0]:+.0f}, {v['tokens_diff_ci'][1]:+.0f}]"
         bold = "**" if sl.startswith("group:") else ""
-        h.append(f"| {task} | {bold}{sl.replace('group:', 'pooled ')}{bold} | {v['n']} | {pct(v['acc_a'])} | {pct(v['acc_b'])} | "
+        dup = f" (= {v['duplicate_of'].split('|')[-1].replace('group:', 'pooled ')})" if "duplicate_of" in v else ""
+        extra = f"{sig3(v['p_cluster_holm'])} | {sig3(v['p_cluster_bh'])} | " if adj else ""
+        h.append(f"| {task} | {bold}{sl.replace('group:', 'pooled ')}{bold}{dup} | {v['n']} ({v['n_clusters']}) | {pct(v['acc_a'])} | {pct(v['acc_b'])} | "
                  f"{100 * v['diff']:+.0f} pp [{100 * v['diff_ci'][0]:+.0f}, {100 * v['diff_ci'][1]:+.0f}] | {v['a_only']} | {v['b_only']} | "
-                 f"{v['mcnemar_p']:.2f} | {td} |")
+                 f"{sig3(v['p_cluster'])} | {extra}{sig3(v['mcnemar_p'])} | {td} |")
+    fam = pair.get(f"_family_{a}-{b}")
+    if fam:
+        h.append(f"\nHolm / BH adjust the cluster sign-flip p over the family of **{fam['n_tests']} distinct** {a}-vs-{b} tests "
+                 "(rows marked “= …” test the same item set as another row and are not counted twice). All comparisons are exploratory; none was pre-registered.")
     return "\n".join(h)
+
+
+HETERO = {("piqa", "group:low"), ("all", "group:low")}
 
 
 def glance(summ, pair, model, n_piqa_done, interim):
     def P(task, sl):
         return pair.get(f"{model}|l2-en|{task}|{sl}")
 
-    def fmt(v):
-        return (f"{100 * v['diff']:+.0f} pp [{100 * v['diff_ci'][0]:+.0f}, {100 * v['diff_ci'][1]:+.0f}] "
-                f"(n={v['n']} pairs, McNemar p={v['mcnemar_p']:.2f})")
+    def fmt(task, sl, v):
+        het = ""
+        if (task, sl) in HETERO:
+            per = [pair.get(f"{model}|l2-en|{t}|{l}") for t in (["math", "piqa"] if task == "all" else [task])
+                   for l in ["sw", "yo", "zu"]]
+            ds = [p["diff"] for p in per if p]
+            if ds and min(ds) < 0 < max(ds):
+                het = " · **heterogeneous** (per-language Δ from " + f"{100 * min(ds):+.0f} to {100 * max(ds):+.0f} pp)"
+        return (f"{100 * v['diff']:+.0f} pp [{100 * v['diff_ci'][0]:+.0f}, {100 * v['diff_ci'][1]:+.0f}]{het} | "
+                f"{v['n']} ({v['n_clusters']}) | {sig3(v['p_cluster'])} | {sig3(v['p_cluster_holm'])} | {sig3(v['mcnemar_p'])} |")
     lines = []
     if interim:
-        lines.append(f"> **INTERIM:** Global PIQA generation is still running ({n_piqa_done}/360 traces). "
-                     "The math numbers are final; the PIQA and pooled numbers will change.\n")
-    lines.append("| question | answer (L2-forced minus En-forced accuracy, 95% clustered-bootstrap CI) |")
-    lines.append("|---|---|")
+        lines.append(f"> **INTERIM:** Global PIQA generation is still running ({n_piqa_done}/360 traces).\n")
+    fam = pair.get("_family_l2-en", {"n_tests": "?"})
+    tests = [pair[k] for k in fam.get("tests", [])]
+    n_raw = sum(t["p_cluster"] < 0.05 for t in tests)
+    n_holm = sum(t["p_cluster_holm"] < 0.05 for t in tests)
+    verdict = ("**none is significant** at 0.05 under the cluster-aware test, before or after Holm correction"
+               if n_raw == 0 and n_holm == 0 else
+               f"{n_raw} reach p<0.05 under the cluster-aware test and {n_holm} after Holm correction")
+    lines.append(f"**Exploratory.** No comparison was pre-specified. Across the {fam['n_tests']} distinct L2-vs-En tests, "
+                 f"{verdict}. The rows show direction and size, not established effects.\n")
+    lines.append("| comparison: L2-forced minus En-forced accuracy | Δ [95% clustered-bootstrap CI] | n pairs (source-item clusters) | cluster sign-flip p (primary) | Holm-adjusted p | exact McNemar p (ignores clustering) |")
+    lines.append("|---|---|---|---|---|---|")
     for label, task, sl in [("Math, low-resource tier (sw, yo, zu)", "math", "group:low"),
                             ("Math, French", "math", "fr"),
                             ("Math, English control", "math", "en"),
@@ -89,7 +124,7 @@ def glance(summ, pair, model, n_piqa_done, interim):
                             ("Both tasks, French", "all", "group:high")]:
         v = P(task, sl)
         if v:
-            lines.append(f"| {label} | {fmt(v)} |")
+            lines.append(f"| {label} | {fmt(task, sl, v)}")
     l2 = summ.get(f"{model}|l2|all|group:low")
     en = summ.get(f"{model}|en|all|group:low")
     if l2 and en:

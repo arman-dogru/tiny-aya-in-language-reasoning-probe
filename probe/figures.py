@@ -18,6 +18,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
 from probe.langs import LANGS  # noqa: E402
+from probe.stats import sig3  # noqa: E402
 
 plt.rcParams.update({"font.size": 9, "axes.spines.top": False, "axes.spines.right": False,
                      "svg.hashsalt": "aya", "figure.dpi": 110})
@@ -149,7 +150,8 @@ def fig_forest(pair, model, a, b, out, name):
         ax.errorbar(v["diff"], i, xerr=nonneg([[v["diff"] - v["diff_ci"][0]], [v["diff_ci"][1] - v["diff"]]]),
                     fmt="D" if pooled else "o", c="k" if pooled else ARM_COL[a], capsize=2, ms=4)
         _, _, t, l = k.split("|")
-        lab = f"{t} · {l.replace('group:', 'POOLED ')}  (n={v['n']}, +{v['a_only']}/−{v['b_only']}, p={v['mcnemar_p']:.2f})"
+        pv = f"p_cluster={sig3(v['p_cluster'])}" + (f", Holm={sig3(v['p_cluster_holm'])}" if "p_cluster_holm" in v else "")
+        lab = f"{t} · {l.replace('group:', 'POOLED ')}  (n={v['n']}, +{v['a_only']}/−{v['b_only']}, {pv})"
         ax.text(1.02, i, lab, transform=ax.get_yaxis_transform(), va="center", fontsize=7)
     ax.axvline(0, c="grey", lw=0.8)
     ax.set_yticks([])

@@ -8,6 +8,7 @@ Writes results/per_trace.csv, results/summary.json (per cell and pooled, with
 from __future__ import annotations
 
 import argparse
+import hashlib
 import csv
 import json
 import os
@@ -15,16 +16,27 @@ from collections import defaultdict
 
 from probe.langs import LANGS, LENIENT_EXTRA
 from probe.metrics import LID, parse_answer, parse_answer_lenient, repetition_score, split_trace, structure
-from probe.stats import bootstrap_mean, mcnemar_exact, paired_bootstrap_diff, wilson
+from probe.stats import bh, bootstrap_mean, holm, mcnemar_exact, paired_bootstrap_diff, signflip_cluster_p, wilson
 
 GROUPS = {"high": ["fr", "fr-CA"], "low": ["sw", "yo", "zu"], "control": ["en"]}
+
+
+def src_of(item_id: str, lang: str) -> str:
+    """Source-item cluster key shared by all translations of one question,
+    e.g. mgsm-012-yo -> mgsm-012, piqa-000003-fr-CA -> piqa-000003."""
+    suffix = "-" + lang
+    assert item_id.endswith(suffix), (item_id, lang)
+    return item_id[: -len(suffix)]
 
 
 def score_run(path: str, think: str, lid: LID) -> list[dict]:
     """think: '' (no reasoning tags), 'think' (</think>) or 'aya' (<|END_THINKING|>)."""
     close = {"think": "</think>", "aya": "<|END_THINKING|>"}.get(think, "")
     rows = []
-    for line in open(path, encoding="utf-8"):
+    lines = [ln for ln in open(path, encoding="utf-8") if ln.strip()]
+    if not lines:
+        raise SystemExit(f"error: {path} contains no traces (did generation run?)")
+    for line in lines:
         r = json.loads(line)
         # The prefilled opener is NOT model output: exclude it from LID/repetition.
         trace, ans = split_trace(r["completion"], think_tags=bool(close), think_close=close or "</think>")
@@ -40,7 +52,7 @@ def score_run(path: str, think: str, lid: LID) -> list[dict]:
         tgt = LANGS[r["lang"]]["lid"]
         rows.append(dict(
             id=r["id"], model=r["model"], arm=r["arm"], task=r["task"], lang=r["lang"],
-            src=r["id"].rsplit("-", 1)[0] if r["lang"] != "fr-CA" else r["id"][: -len("-fr-CA")],
+            src=src_of(r["id"], r["lang"]),
             gold=r["gold"], pred=pred if pred is not None else "", parsed=int(pred is not None),
             correct=int(pred is not None and pred == r["gold"]),
             format_ok=int(strict is not None), correct_strict=int(strict is not None and strict == r["gold"]),
@@ -77,7 +89,7 @@ def cell_summary(rs: list[dict]) -> dict:
         out["list_lines"] = bootstrap_mean([r["list_lines"] for r in rs])
         out["rep4"] = bootstrap_mean([r["rep4"] for r in rs if r["rep4"] != ""])
         out["lid_hist"] = dict(sorted(((lab, sum(1 for r in rs if r["trace_lid"] == lab)) for lab in
-                                       {r["trace_lid"] for r in rs}), key=lambda x: -x[1]))
+                                       {r["trace_lid"] for r in rs}), key=lambda x: (-x[1], x[0])))
     return out
 
 
@@ -120,10 +132,42 @@ def paired(rows: list[dict], a: str, b: str) -> dict:
             out[f"{m}|{a}-{b}|{task}|{lang}"] = dict(
                 n=len(pairs), acc_a=sum(ca) / len(ca), acc_b=sum(cb) / len(cb), diff=d, diff_ci=(lo, hi),
                 a_only=bb, b_only=cc, mcnemar_p=mcnemar_exact(bb, cc),
+                p_cluster=signflip_cluster_p(ca, cb, src), n_clusters=len(set(src)),
+                item_set_sha=hashlib.sha256("\n".join(sorted(p[0]["id"] for p in pairs)).encode()).hexdigest()[:16],
                 tokens_diff=td, tokens_diff_ci=(tlo, thi),
                 a_only_ids=[p[0]["id"] for p in pairs if p[0]["correct"] and not p[1]["correct"]],
                 b_only_ids=[p[0]["id"] for p in pairs if p[1]["correct"] and not p[0]["correct"]])
     return out
+
+
+def add_multiplicity(pr: dict, a: str = "l2", b: str = "en") -> dict:
+    """Holm and BH over the family of DISTINCT a-vs-b tests (a row whose item set equals an
+    earlier row's, e.g. math 'pooled control' == math 'en', is a duplicate and is not
+    counted twice). Adjusts both the cluster sign-flip p (primary) and exact McNemar p."""
+    fam, seen = [], {}
+    # canonical row = most specific: per-language cells first, then task-level pools, then 'all'
+    order = sorted((k for k in pr if f"|{a}-{b}|" in k),
+                   key=lambda k: (k.split("|")[2] == "all", "group:" in k.split("|")[3], k))
+    for k in order:
+        v = pr[k]
+        key = (k.split("|")[0], v["item_set_sha"])
+        if key in seen:
+            v["duplicate_of"] = seen[key]
+            continue
+        seen[key] = k
+        fam.append(k)
+    for p_key in ["p_cluster", "mcnemar_p"]:
+        ps = [pr[k][p_key] for k in fam]
+        for k, h, q in zip(fam, holm(ps), bh(ps)):
+            pr[k][p_key + "_holm"] = h
+            pr[k][p_key + "_bh"] = q
+    for k, v in pr.items():
+        if "duplicate_of" in v:
+            for p_key in ["p_cluster", "mcnemar_p"]:
+                v[p_key + "_holm"] = pr[v["duplicate_of"]][p_key + "_holm"]
+                v[p_key + "_bh"] = pr[v["duplicate_of"]][p_key + "_bh"]
+    pr[f"_family_{a}-{b}"] = dict(n_tests=len(fam), tests=fam)
+    return pr
 
 
 def main() -> None:
@@ -145,14 +189,17 @@ def main() -> None:
         w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
         w.writeheader()
         w.writerows(rows)
-    json.dump(summarize(rows), open(os.path.join(a.out, "summary.json"), "w"), indent=1, ensure_ascii=False)
+    json.dump(summarize(rows), open(os.path.join(a.out, "summary.json"), "w"), indent=1, ensure_ascii=False,
+              sort_keys=True)
     pr = {}
     arms = {(r["model"], r["arm"]) for r in rows}
     for m in {r["model"] for r in rows}:
         for x, y in [("l2", "en"), ("l2", "direct"), ("en", "direct"), ("l2", "native"), ("native", "direct")]:
             if (m, x) in arms and (m, y) in arms:
                 pr.update(paired([r for r in rows if r["model"] == m], x, y))
-    json.dump(pr, open(os.path.join(a.out, "paired.json"), "w"), indent=1, ensure_ascii=False)
+    if any("|l2-en|" in k for k in pr):
+        add_multiplicity(pr)
+    json.dump(pr, open(os.path.join(a.out, "paired.json"), "w"), indent=1, ensure_ascii=False, sort_keys=True)
     print(f"scored {len(rows)} traces -> {a.out}/per_trace.csv, summary.json, paired.json")
 
 
