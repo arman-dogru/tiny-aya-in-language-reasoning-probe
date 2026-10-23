@@ -137,6 +137,9 @@ def main() -> None:
     for spec in a.run:
         path, _, flag = spec.partition(":")
         rows += score_run(path, flag, lid)
+    keys = [(r["model"], r["id"], r["arm"]) for r in rows]
+    dup = len(keys) - len(set(keys))
+    assert dup == 0, f"{dup} duplicated (model, id, arm) traces: a resumed run wrote a trace twice"
     os.makedirs(a.out, exist_ok=True)
     with open(os.path.join(a.out, "per_trace.csv"), "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
