@@ -1,0 +1,40 @@
+{
+ "label": "committed vs reviewer tb1 run2",
+ "a": "results/traces/tiny-aya-global-q4km.math.jsonl",
+ "b": "results/determinism/reviewer_tb1_run2.jsonl",
+ "n": 3,
+ "identical": 0,
+ "same_correctness": 3,
+ "rows": [
+  {
+   "id": "mgsm-000-sw",
+   "arm": "direct",
+   "identical": false,
+   "first_diff_char": 0,
+   "tokens_a": 3,
+   "tokens_b": 3,
+   "correct_a": false,
+   "correct_b": false
+  },
+  {
+   "id": "mgsm-000-sw",
+   "arm": "en",
+   "identical": false,
+   "first_diff_char": 90,
+   "tokens_a": 95,
+   "tokens_b": 95,
+   "correct_a": true,
+   "correct_b": true
+  },
+  {
+   "id": "mgsm-000-sw",
+   "arm": "l2",
+   "identical": false,
+   "first_diff_char": 62,
+   "tokens_a": 85,
+   "tokens_b": 102,
+   "correct_a": true,
+   "correct_b": true
+  }
+ ]
+}

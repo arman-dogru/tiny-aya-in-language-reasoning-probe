@@ -134,3 +134,41 @@ def test_avg_rank_and_spearman_ties():
     assert list(avg_rank([10, 20, 20, 5])) == [1.0, 2.5, 2.5, 0.0]
     # with ties, ordinal ranks (argsort of argsort) give 1.0 here; tie-averaged gives 0.866
     assert spearman([0, 0, 1], [1, 2, 3]) == pytest.approx(0.8660254, abs=1e-6)
+
+
+# r2-m1: hand-computed fixtures for the multiplicity corrections and p formatting.
+def test_holm_hand_computed_non_monotone():
+    from probe.stats import holm
+    # sorted: 0.01 (x4 = 0.04), 0.03 (x3 = 0.09), 0.04 (x2 = 0.08 -> running max 0.09), 0.2 (x1 = 0.2)
+    assert holm([0.01, 0.04, 0.03, 0.2]) == pytest.approx([0.04, 0.09, 0.09, 0.2])
+    # ties: 0.02 x3 = 0.06, 0.02 x2 = 0.04 -> 0.06; capped at 1
+    assert holm([0.02, 0.02, 0.5]) == pytest.approx([0.06, 0.06, 0.5])
+    assert holm([0.4, 0.6]) == pytest.approx([0.8, 0.8])
+    assert holm([0.6, 0.7]) == pytest.approx([1.0, 1.0])
+
+
+def test_bh_hand_computed_non_monotone():
+    from probe.stats import bh
+    # p*m/rank: 0.04, 0.06 (0.03, rank 2), 0.0533 (0.04, rank 3), 0.2 -> running min from the top
+    # (the running min starts at 1.0, so no separate cap at 1 is needed)
+    assert bh([0.01, 0.04, 0.03, 0.2]) == pytest.approx([0.04, 0.16 / 3, 0.16 / 3, 0.2])
+    # ties: 0.5*3/3 = 0.5; 0.02*3/2 = 0.03; 0.02*3/1 = 0.06 -> min 0.03
+    assert bh([0.02, 0.02, 0.5]) == pytest.approx([0.03, 0.03, 0.5])
+    assert bh([0.9, 0.95]) == pytest.approx([0.95, 0.95])
+
+
+def test_sig3_three_significant_figures():
+    from probe.stats import sig3
+    assert sig3(0.049041) == "0.0490"
+    assert sig3(0.09375) == "0.0938"
+    assert sig3(0.8337) == "0.834"
+    assert sig3(0.5) == "0.500"
+    assert sig3(0.9996) == "1.00"
+    # the 0.9995 cutoff: just below keeps 3 s.f., at/above prints 1.00
+    assert sig3(0.997) == "0.997"
+    assert sig3(0.9994) == "0.999"
+    assert sig3(0.9995) == "1.00"
+    assert sig3(1.0) == "1.00"
+    assert sig3(0.00183) == "0.00183"
+    assert sig3(0.000123) == "1.23e-04"
+    assert sig3(float("nan")) == "nan"

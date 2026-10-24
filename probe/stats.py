@@ -112,8 +112,8 @@ def bh(p: Sequence[float]) -> list[float]:
     run = 1.0
     for k, i in enumerate(order):
         rank = m - k
-        run = min(run, p[i] * m / rank)
-        adj[i] = min(1.0, run)
+        run = min(run, p[i] * m / rank)  # run starts at 1.0, so adjusted p never exceeds 1
+        adj[i] = run
     return adj
 
 
