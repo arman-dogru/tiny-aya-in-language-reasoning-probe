@@ -141,11 +141,11 @@ Swahili, the language with the largest accuracy drop (−20 pp), runs the *other
 
 ### 5. Paired differences
 
-![Forest plot of accuracy(L2-forced) minus accuracy(En-forced) per task × language and pooled by resource group, with 95% paired bootstrap intervals clustered by source item, and beside each row the n, discordant counts, cluster sign-flip p and Holm-adjusted p. No row is significant after correction.](docs/figures/paired_l2_vs_en.png)
+![Forest plot of accuracy(L2-forced) minus accuracy(En-forced), one row for each of the 17 distinct item sets in the Holm/BH family: 11 task × language cells, then pooled rows (math low; PIQA high and low; both tasks control, high and low). Pooled rows that repeat another row's items, such as math · POOLED high (= math · fr), are omitted. Each row has a 95% paired bootstrap interval clustered by source item, plus the n, discordant counts, cluster sign-flip p and Holm-adjusted p. No row is significant after correction; the smallest cluster p is 0.0938 for math · POOLED low.](docs/figures/paired_l2_vs_en.png)
 
 **Figure 10.** *Data: [`results/paired.json`](results/paired.json) · script: [`probe/stats.py`](probe/stats.py), [`probe/figures.py`](probe/figures.py) (`fig_forest`).*
 
-![Forest plot of accuracy(L2-forced) minus accuracy(direct) per task × language: large positive gains on math in every language, smaller and noisier on PIQA.](docs/figures/paired_l2_vs_direct.png)
+![Forest plot of accuracy(L2-forced) minus accuracy(direct) per task × language and per distinct pooled group (duplicate pooled rows omitted, as in Figure 10): large positive gains on math in every language, smaller and noisier on PIQA.](docs/figures/paired_l2_vs_direct.png)
 
 **Figure 11.** *Data: [`results/paired.json`](results/paired.json) · script: [`probe/figures.py`](probe/figures.py) (`fig_forest`).*
 

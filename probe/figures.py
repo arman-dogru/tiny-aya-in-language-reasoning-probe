@@ -136,12 +136,22 @@ def spearman(x, y):
 
 def fig_forest(pair, model, a, b, out, name):
     keys = [k for k in pair if k.startswith(f"{model}|{a}-{b}|")]
-    order = []
+    # One row per distinct item set (r2-n1): per-language cells first, then task pools, then
+    # cross-task pools; a pooled row whose items equal an earlier row's (e.g. math · POOLED high
+    # = math · fr) is dropped. For l2-en this is exactly the 17-test Holm/BH family.
+    cand = []
     for t in ["math", "piqa"]:
-        order += [f"{model}|{a}-{b}|{t}|{l}" for l in LANG_ORDER[t]]
-        order += [f"{model}|{a}-{b}|{t}|group:{g}" for g in ["high", "low"]]
-    order += [f"{model}|{a}-{b}|all|group:{g}" for g in ["high", "low"]]
-    order = [k for k in order if k in keys]
+        cand += [f"{model}|{a}-{b}|{t}|{l}" for l in LANG_ORDER[t]]
+        cand += [f"{model}|{a}-{b}|{t}|group:{g}" for g in ["control", "high", "low"]]
+    cand += [f"{model}|{a}-{b}|all|group:{g}" for g in ["control", "high", "low"]]
+    order, seen = [], set()
+    for k in cand:
+        if k in keys and pair[k]["item_set_sha"] not in seen:
+            seen.add(pair[k]["item_set_sha"])
+            order.append(k)
+    fam = pair.get(f"_family_{a}-{b}")
+    if fam:
+        assert set(order) == set(fam["tests"]), "forest rows differ from the multiplicity family"
     fig, ax = plt.subplots(figsize=(6.5, 0.28 * len(order) + 1))
     for i, k in enumerate(order[::-1]):
         v = pair[k]
@@ -156,7 +166,8 @@ def fig_forest(pair, model, a, b, out, name):
     ax.set_yticks([])
     ax.set_xlim(-1, 1)
     ax.set_xlabel(f"accuracy({a}) − accuracy({b}); 95% paired bootstrap CI (clustered by source item)")
-    ax.set_title(f"{model}: {ARM_NAME[a]} vs {ARM_NAME[b]}")
+    ax.set_title(f"{model}: {ARM_NAME[a]} vs {ARM_NAME[b]}\n"
+                 f"{len(order)} distinct item sets (pooled rows that repeat another row's items omitted)", fontsize=9)
     save(fig, out, name)
 
 
