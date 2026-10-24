@@ -12,6 +12,7 @@ muts = [
  ("probe/stats.py", "        run = max(run, min(1.0, (m - k) * p[i]))", "        run = min(1.0, (m - k) * p[i])", "holm without running max"),
  ("probe/stats.py", "        run = min(run, p[i] * m / rank)", "        run = p[i] * m / rank", "bh without running min"),
  ("probe/stats.py", 'return f"{p:#.3g}" if', 'return f"{p:#.2g}" if', "sig3 at 2 significant figures"),
+ ("probe/stats.py", "    if p >= 0.9995:", "    if p >= 0.995:", "sig3 cutoff moved to 0.995"),
 ]
 res=[]
 for f, a, b, name in muts:

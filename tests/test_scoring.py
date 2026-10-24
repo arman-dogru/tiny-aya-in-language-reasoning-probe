@@ -150,6 +150,7 @@ def test_holm_hand_computed_non_monotone():
 def test_bh_hand_computed_non_monotone():
     from probe.stats import bh
     # p*m/rank: 0.04, 0.06 (0.03, rank 2), 0.0533 (0.04, rank 3), 0.2 -> running min from the top
+    # (the running min starts at 1.0, so no separate cap at 1 is needed)
     assert bh([0.01, 0.04, 0.03, 0.2]) == pytest.approx([0.04, 0.16 / 3, 0.16 / 3, 0.2])
     # ties: 0.5*3/3 = 0.5; 0.02*3/2 = 0.03; 0.02*3/1 = 0.06 -> min 0.03
     assert bh([0.02, 0.02, 0.5]) == pytest.approx([0.03, 0.03, 0.5])
@@ -163,6 +164,11 @@ def test_sig3_three_significant_figures():
     assert sig3(0.8337) == "0.834"
     assert sig3(0.5) == "0.500"
     assert sig3(0.9996) == "1.00"
+    # the 0.9995 cutoff: just below keeps 3 s.f., at/above prints 1.00
+    assert sig3(0.997) == "0.997"
+    assert sig3(0.9994) == "0.999"
+    assert sig3(0.9995) == "1.00"
+    assert sig3(1.0) == "1.00"
     assert sig3(0.00183) == "0.00183"
     assert sig3(0.000123) == "1.23e-04"
     assert sig3(float("nan")) == "nan"
