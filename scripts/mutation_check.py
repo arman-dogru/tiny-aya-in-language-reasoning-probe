@@ -1,4 +1,4 @@
-# Re-applies the 6 single-line mutations from review round 1 (m1) to a temp copy and runs the tests.
+# Re-applies the single-line mutations from review rounds 1 (m1) and 2 (r2-m1) to a temp copy and runs the tests.
 # Usage: python scripts/mutation_check.py  (expects every line to say "killed")
 import subprocess, shutil, sys, os
 muts = [
@@ -8,6 +8,10 @@ muts = [
  ("probe/score.py", 'l2=int(lab in tgt) if', 'l2=int(lab in tgt + ["eng_Latn"]) if', "L2 rate counts eng_Latn"),
  ("probe/stats.py", "    return min(1.0, 2 * p)", "    return min(1.0, p)", "mcnemar loses x2"),
  ("probe/metrics.py", "        v = n[-1].replace", "        v = n[0].replace", "lenient math takes first number"),
+ # round 2 (r2-m1)
+ ("probe/stats.py", "        run = max(run, min(1.0, (m - k) * p[i]))", "        run = min(1.0, (m - k) * p[i])", "holm without running max"),
+ ("probe/stats.py", "        run = min(run, p[i] * m / rank)", "        run = p[i] * m / rank", "bh without running min"),
+ ("probe/stats.py", 'return f"{p:#.3g}" if', 'return f"{p:#.2g}" if', "sig3 at 2 significant figures"),
 ]
 res=[]
 for f, a, b, name in muts:
