@@ -120,9 +120,9 @@ Traces are short for both arms: median 148 generated tokens, 5th–95th percenti
 | wrong operation or sign on the right quantities | 4 (050-yo, 058-zu, 060-zu, 090-zu) | 1 (148-zu) |
 | solved a different problem (wrong setup) | 4 (000-zu, 015-sw, 015-yo, 060-sw) | 1 (210-zu) |
 | doomloop until the 512-token cap | 1 (174-sw) | 0 |
-| **winning trace itself reached gold through a visibly wrong step** | 3 (000-zu, 012-yo, 210-yo) | 1 (241-sw) |
+| **winning trace itself contains a visibly wrong step** (rule in [`probe/error_coding.py`](probe/error_coding.py)) | 4 (000-zu, 012-yo, 174-sw, 210-yo) | 1 (241-sw) |
 
-No single cause dominates. L2 losses split evenly across dropped conditions, wrong operations and wrong setups, and En losses are the same kinds of error. Four of the 17 "wins" are themselves flawed. For example, in `mgsm-012-yo` (gold 13) the L2 trace ignores the $90 planting cost and divides revenue by upkeep (→ 4). The En trace does use the cost, but it computes 90 / 7.5 as "12.2" (it is exactly 12) and then rounds up, so its 13 comes from wrong arithmetic plus rounding. In `mgsm-210-yo` the En trace reaches 10 as $50 / $5, which drops both the savings and the mowing rate. Per-item notes are in the CSV; no item was selected for this section, because all 17 are listed.
+No single cause dominates. L2 losses split evenly across dropped conditions, wrong operations and wrong setups, and En losses are the same kinds of error. Five of the 17 "wins" are themselves flawed. For example, in `mgsm-012-yo` (gold 13) the L2 trace ignores the $90 planting cost and divides revenue by upkeep (→ 4). The En trace does use the cost, but it computes 90 / 7.5 as "12.2" (it is exactly 12) and then rounds up, so its 13 comes from wrong arithmetic plus rounding. In `mgsm-210-yo` the En trace reaches 10 as $50 / $5, which drops both the savings and the mowing rate. Per-item notes are in the CSV; no item was selected for this section, because all 17 are listed.
 
 **Structure.** The two arms also write in different *styles*. En-forced traces on low-resource prompts are enumerated derivations (6.1–7.8 list lines per trace), while L2-forced Swahili, Yoruba and Zulu traces are one prose paragraph (0–0.3 list lines). Explicit arithmetic steps (`=` signs per trace, mean [bootstrap 95% CI], n = 20 each) do **not** move consistently with the arm:
 

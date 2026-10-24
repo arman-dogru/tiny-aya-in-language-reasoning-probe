@@ -10,7 +10,7 @@ mgsm-060-sw,en_only,17,18,17,l2,wrong_setup,,0,"L2 takes 20% of 24 (after removi
 mgsm-060-zu,en_only,17,20,17,l2,wrong_operation,condition_dropped,0,"L2 never removes the bad orange and adds the 2 sour ones back."
 mgsm-090-sw,en_only,225,250,225,l2,condition_dropped,,0,"L2 computes the child portion (5 lb) and then feeds every dinosaur 10 lb."
 mgsm-090-zu,en_only,225,45,225,l2,wrong_operation,,0,"L2 adds the number of adults (20) to the children's pounds (25 lb)."
-mgsm-174-sw,en_only,95,90,95,l2,doomloop_cap,,0,"L2 repeats 'dakika 90 + sekunde 300 =' until the 512-token cap and is budget-forced to 90 (unit conversion never done)."
+mgsm-174-sw,en_only,95,90,95,l2,doomloop_cap,,1,"L2 repeats 'dakika 90 + sekunde 300 =' until the 512-token cap and is budget-forced to 90 (unit conversion never done). En winner's main derivation is right (90 + 5 = 95), but its verification block states 'Each viazi takes 1.5 minutes (kumenya) + 5 seconds (kukata) = 1.5 minutes' (recoded 0 -> 1 in round 2 when the rule was written down)."
 mgsm-210-yo,en_only,10,5,10,l2,condition_dropped,wrong_setup,1,"L2 prices 2 pairs of shoes at $20 total, drops the $10 savings and confuses babysitting with mowing. En winner drops the $10 savings and the $4 mowing rate and reaches 10 as $50 / $5, i.e. right answer by a wrong route."
 mgsm-049-yo,l2_only,30,30,4,en,condition_dropped,,0,"En drops 'each floor contains 8 units' and works with 15 units."
 mgsm-148-zu,l2_only,30,30,14,en,wrong_operation,,0,"En subtracts the $8 change instead of adding it."
