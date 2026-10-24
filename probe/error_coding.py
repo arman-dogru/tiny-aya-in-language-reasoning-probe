@@ -7,7 +7,14 @@ Coding protocol (one coder, the author, after seeing which arm was right; not bl
   quantities, wrong arithmetic operation or sign), wrong_setup (a different problem is solved,
   e.g. summing two options instead of choosing), doomloop_cap (repetition until the token cap),
   arithmetic_error, misread_quantity.
-- winner_reasoning_flawed = 1 if the winning trace reaches gold through a visibly wrong step.
+- winner_reasoning_flawed = 1 if the winning trace reaches gold through a visibly wrong step
+  (a wrong computation, or a dropped/misused quantity that happens to cancel out).
+  Relabelling the goods alone does NOT count as flawed: a winner that renames the objects
+  (e.g. oranges -> apples/cherries in mgsm-060-sw, jewelry/gadgets -> tents/camping gear in
+  mgsm-015-yo) but uses every quantity correctly is coded 0; the relabelling is noted in `note`.
+  A false or spurious arithmetic line anywhere in the winning trace counts as flawed even if
+  the final computation does not use it (mgsm-000-zu '4 eggs/day x 4 days = 16';
+  mgsm-174-sw '1.5 minutes + 5 seconds = 1.5 minutes' in its verification block).
 """
 import argparse
 import csv
